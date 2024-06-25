@@ -3,9 +3,6 @@ module LocalPolynomialDensityEstimation
 using DocStringExtensions
 import Statistics: mean
 
-atleast_2d(a) = fill(a, 1, 1)
-atleast_2d(a::AbstractArray) = ndims(a) == 1 ? reshape(a, :, 1) : a
-
 bernstein(n, k, t) = binomial(n, k) .* t .^ k .* (1 .- t) .^ (n - k)
 
 function bezier(points; num = 200)
@@ -58,22 +55,23 @@ given an array of points *a*, create a curve through those points.
 - `edgy` is a parameter which controls how "edgy" the curve is,
            edgy=0 is smoothest.
 """
-function get_bezier_curve(a, rad = 0.2, edgy = 0)
-    p = arctan(edgy) / pi + 0.5
+function get_bezier_curve(a, rad, edgy)
+    p = atan(edgy) / pi + 0.5
     a = ccw_sort(a)
-    push!(a, atleast_2d(a[:, 1]), dims = 2)
+    a = hcat(a, a[:, 1])
     d = diff(a, dims = 2)
-    ang = atan(d[:, 2], d[:, 1])
+    ang = atan.(d[2, :], d[1,:])
     f(ang) = (ang >= 0) * ang + (ang < 0) * (ang + 2pi)
-    ang = f(ang)
+    ang = f.(ang)
     ang1 = ang
     ang2 = circshift(ang, 1)
-    @show ang = p * ang1 + (1 - p) * ang2 + (abs(ang2 - ang1) > pi) * pi
-    push!(ang, [ang[1]])
-    a .= hcat(a, atleast_2d(ang)')
-    s, c = get_curve(a, r = rad)
-    x, y = c'
-    return x, y, a
+    ang = p .* ang1 .+ (1 - p) .* ang2 .+ (abs.(ang2 .- ang1) .> pi) .* pi
+    push!(ang, ang[1])
+    #a = hcat(a, ang)
+    #s, c = get_curve(a, r = rad)
+    #x, y = c'
+    #return x, y, a
+    return ang
 end
 
 function ccw_sort(p)

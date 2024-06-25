@@ -1,7 +1,7 @@
 name = "LocalPolynomialDensityEstimation"
 uuid = "83fb4684-3fee-4d04-98f8-7882db2935bc"
 authors = ["Pierre Navaro <pierre.navaro@math.cnrs.fr> and contributors"]
-version = "1.0.0-DEV"
+version = "0.1.0"
 
 [deps]
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
