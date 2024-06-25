@@ -3,6 +3,10 @@ uuid = "83fb4684-3fee-4d04-98f8-7882db2935bc"
 authors = ["Pierre Navaro <pierre.navaro@math.cnrs.fr> and contributors"]
 version = "1.0.0-DEV"
 
+[deps]
+DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+
 [compat]
 julia = "1.10"
 
