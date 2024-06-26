@@ -15,18 +15,16 @@ function bezier(points, num)
     return curve
 end
 
-
-
-function segment(p1, p2, angle1, angle2, r; numpoints = 100)
+function segment(p1, p2, θ1, θ2, r)
 
     d = sqrt(sum((p2 .- p1) .^ 2))
     r = r * d
     p = zeros((2, 4))
     p[:, 1] .= p1
-    p[:, 2] .= p1 .+ [r * cos(angle1), r * sin(angle1)]
-    p[:, 3] .= p2 .+ [r * cos(angle2 + pi), r * sin(angle2 + pi)]
+    p[:, 2] .= p1 .+ [r * cos(θ1), r * sin(θ1)]
+    p[:, 3] .= p2 .+ [r * cos(θ2 + pi), r * sin(θ2 + pi)]
     p[:, 4] .= p2
-    bezier(p, numpoints)
+    bezier(p, 100)
 
 end
 
@@ -44,16 +42,12 @@ function get_curve(points, r)
     return hcat(curve...)
 end
 
+function ccw_sort(p)
+    d = p .- mean(p, dims = 2)
+    s = atan.(d[1, :], d[2, :])
+    return p[:, sortperm(s)]
+end
 
-""" 
-$(SIGNATURES)
-
-given an array of points *a*, create a curve through those points. 
-
-- `rad` is a number between 0 and 1 to steer the distance of control points.
-- `edgy` is a parameter which controls how "edgy" the curve is,
-           edgy=0 is smoothest.
-"""
 function get_bezier_curve(a, r, edgy)
     p = atan(edgy) / pi + 0.5
     a = ccw_sort(a)
@@ -71,18 +65,7 @@ function get_bezier_curve(a, r, edgy)
     return c[1,:], c[2,:]
 end
 
-function ccw_sort(p)
-    d = p .- mean(p, dims = 2)
-    s = atan.(d[1, :], d[2, :])
-    return p[:, sortperm(s)]
-end
 
-""" 
-$(SIGNATURES)
-
-create n random points in the unit square, which are *mindst*
-apart, then scale them.
-"""
 function get_random_points(n, scale; mindst = nothing, rec = 0)
     mindst = isnothing(mindst) ? 0.7 / n : mindst
     a = rand(2, n)
@@ -95,6 +78,22 @@ function get_random_points(n, scale; mindst = nothing, rec = 0)
     end
 end
 
+export random_shape
+
+""" 
+$(SIGNATURES)
+
+Create a random shape by creating `n` random points in the unit square, which are `mindst` apart, then `scale` them. Given this array of points, create a curve through those points. 
+
+- `rad` is a number between 0 and 1 to steer the distance of control points.
+- `edgy` is a parameter which controls how "edgy" the curve is, edgy=0 is smoothest.
+"""
+function random_shape(; rad = 0.2, edgy = 0.05, n = 7, scale = 1)
+    
+    a = get_random_points(n, scale)
+    get_bezier_curve(a, rad, edgy)
+
+end
 
 
 end
