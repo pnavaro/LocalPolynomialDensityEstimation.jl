@@ -62,7 +62,7 @@ function get_bezier_curve(a, r, edgy)
     push!(ang, ang[1])
     a = vcat(a, ang')
     c = get_curve(a, r)
-    return c[1,:], c[2,:]
+    return c
 end
 
 
@@ -90,8 +90,8 @@ Create a random shape by creating `n` random points in the unit square, which ar
 """
 function random_shape(; rad = 0.2, edgy = 0.05, n = 7, scale = 1)
     
-    a = get_random_points(n, scale)
-    get_bezier_curve(a, rad, edgy)
+    p = get_random_points(n, scale)
+    get_bezier_curve(p, rad, edgy)
 
 end
 
