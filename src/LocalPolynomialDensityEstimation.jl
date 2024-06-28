@@ -1,7 +1,13 @@
 module LocalPolynomialDensityEstimation
 
 using DocStringExtensions
+using RecipesBase
 import Statistics: mean
+
+include("ray_tracing.jl")
+include("window.jl")
+# include("cartesian_mesh.jl")
+# include("density_estimation.jl")
 
 bernstein(n, k, t) = binomial(n, k) .* t .^ k .* (1 .- t) .^ (n - k)
 
@@ -83,17 +89,28 @@ export random_shape
 """ 
 $(SIGNATURES)
 
-Create a random shape by creating `n` random points in the unit square, which are `mindst` apart, then `scale` them. Given this array of points, create a curve through those points. 
+Create a random shape by creating `n` random points in the unit square, which are 
+`mindst` apart, then `scale` them. Given this array of points, create a curve through those points. 
 
 - `rad` is a number between 0 and 1 to steer the distance of control points.
 - `edgy` is a parameter which controls how "edgy" the curve is, edgy=0 is smoothest.
+
+Reference : https://stackoverflow.com/questions/50731785/create-random-shape-contour-using-matplotlib
 """
 function random_shape(; rad = 0.2, edgy = 0.05, n = 7, scale = 1)
     
     p = get_random_points(n, scale)
-    get_bezier_curve(p, rad, edgy)
+    [Point(p...) for p in eachcol(get_bezier_curve(p, rad, edgy))]
 
 end
 
+
+@recipe function f(shape::Vector{Point})
+
+    x := [[p.x for p in shape]; first(shape).x]
+    y := [[p.y for p in shape]; first(shape).y]
+    ()
+
+end
 
 end
