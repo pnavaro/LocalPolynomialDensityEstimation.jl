@@ -1,3 +1,5 @@
+using TypedPolynomials
+
 export Window
 
 const IMG_SIZE = 128
@@ -5,7 +7,6 @@ const IMG_SIZE = 128
 struct Window
 
     boundary :: Vector{Point}
-
 
     function Window( x,  y)
 
@@ -49,13 +50,13 @@ export Image
 
 struct Image
 
-    f :: Function
+    f :: Monomial
     x :: Vector{Float64}
     y :: Vector{Float64}
     dx :: Float64
     dy :: Float64
 
-    function Image( f, xrange, yrange )
+    function Image( f :: Monomial, xrange, yrange )
 
         dx = (xrange[2] - xrange[1]) / IMG_SIZE
         dy = (yrange[2] - yrange[1]) / IMG_SIZE
@@ -69,11 +70,21 @@ struct Image
 
 end
 
+function Image( f :: Monomial, w :: Window )
+
+    xrange = extrema( p.x for p in w.bounday )
+    yrange = extrema( p.y for p in w.bounday )
+
+    Image( f, xrange, yrange )
+
+end
+
+
 export integral
 
 function integral( z :: Image) 
 
-    s = sum(z.f(px, py) for px in z.x, py in z.y)
+    s = sum(z.f(x => px, y => py) for px in z.x, py in z.y)
 
     return s * z.dx * z.dy
 
@@ -81,9 +92,12 @@ end
 
 function integral( z :: Image, w :: Window )
 
-    s = sum(z.f(px, py) for px in z.x, py in z.y if inshape(Point(px,py), w.boundary))
+    s = sum(z.f(x => px, y => py) for px in z.x, py in z.y if inshape(Point(px,py), w.boundary))
 
     return s * z.dx * z.dy
 
 end
 
+import Base.:(*)
+
+(*)(u::Image, v::Image) = Image( u * v, u.w )
