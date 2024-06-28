@@ -5,6 +5,8 @@ struct Point
     y :: Float64
 end
 
+Base.:(==)(a::Point, b::Point) = ( a.x ≈ b.x) && ( a.y ≈ b.y )
+
 export inshape
 
 # Checking if a point is inside a shape
