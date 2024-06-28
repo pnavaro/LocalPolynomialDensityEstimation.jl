@@ -16,23 +16,24 @@
 # +
 using LocalPolynomialDensityEstimation
 using Plots
+using TypedPolynomials
 
-x=(0.5,1,0.5,0) 
-y=(0,1,2,1) 
 # -
 
-w = Window(x, y)
+w = Window((0.5,1,0.5,0) , (0,1,2,1) )
 
 plot(w.boundary)
 
-f(x,y) = 3x^2 + 2y
+@polyvar x y
+
+f = 3x^2 + 2y
 
 z = Image(f, (0,1), (0,1))
 
-integral(z)
+@show integral(z)
 
 w = Window((0.1,0.9), (0.2,0.8))
 
-integral(z, w )
+@show integral(z, w )
 
 

@@ -25,10 +25,6 @@ poly = [Point(i,j) for (i,j) in zip(x,y)]
 
 plot(poly)
 
-w = Owin( x, y)
+w = Window( x, y)
 
-w.xrange
-
-w.yrange
-
-
+w.boundary

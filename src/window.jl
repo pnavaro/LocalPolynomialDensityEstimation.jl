@@ -50,13 +50,13 @@ export Image
 
 struct Image
 
-    f :: Monomial
+    f :: AbstractPolynomial
     x :: Vector{Float64}
     y :: Vector{Float64}
     dx :: Float64
     dy :: Float64
 
-    function Image( f :: Monomial, xrange, yrange )
+    function Image( f :: AbstractPolynomial, xrange, yrange )
 
         dx = (xrange[2] - xrange[1]) / IMG_SIZE
         dy = (yrange[2] - yrange[1]) / IMG_SIZE
@@ -70,7 +70,7 @@ struct Image
 
 end
 
-function Image( f :: Monomial, w :: Window )
+function Image( f :: AbstractPolynomial, w :: Window )
 
     xrange = extrema( p.x for p in w.bounday )
     yrange = extrema( p.y for p in w.bounday )
@@ -84,6 +84,8 @@ export integral
 
 function integral( z :: Image) 
 
+    @polyvar x y
+
     s = sum(z.f(x => px, y => py) for px in z.x, py in z.y)
 
     return s * z.dx * z.dy
@@ -92,12 +94,17 @@ end
 
 function integral( z :: Image, w :: Window )
 
+    @polyvar x y
+
     s = sum(z.f(x => px, y => py) for px in z.x, py in z.y if inshape(Point(px,py), w.boundary))
 
     return s * z.dx * z.dy
 
 end
 
-import Base.:(*)
 
-(*)(u::Image, v::Image) = Image( u * v, u.w )
+Base.:(*)(u::Image, v::Image) = Image( u.f * v.f, u.w )
+
+Base.:(-)(u::Image, v::Image) = Image( u.f - v.f, u.w )
+
+Base.:(*)(u::Image, v::Float64) = Image( u.f * v, u.w )

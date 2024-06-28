@@ -23,7 +23,7 @@ plot(s)
 points = rand(2,100)
 random_points = [Point(p...) for p in eachcol(points)]
 
-scatter(random_points, group=[point_in_shape(p, s) for p in random_points])
+scatter(random_points, group=[inshape(p, s) for p in random_points])
 plot!(s)
 
 
