@@ -6,7 +6,7 @@ import Statistics: mean
 
 include("ray_tracing.jl")
 include("window.jl")
-# include("cartesian_mesh.jl")
+include("orthonormal_polynomials.jl")
 # include("density_estimation.jl")
 
 bernstein(n, k, t) = binomial(n, k) .* t .^ k .* (1 .- t) .^ (n - k)
