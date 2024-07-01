@@ -1,11 +1,14 @@
 using LocalPolynomialDensityEstimation
 using Test
 using Aqua
+using MultivariatePolynomials
 
 @testset "LocalPolynomialDensityEstimation.jl" begin
 
     @testset "Code quality (Aqua.jl)" begin
-        Aqua.test_all(LocalPolynomialDensityEstimation)
+        Aqua.test_all(LocalPolynomialDensityEstimation;
+                      ambiguities=(exclude=[MultivariatePolynomials.isapprox,
+                                            MultivariatePolynomials.:(==) ], broken=false))
     end
 
     @testset "Bezier curve" begin
