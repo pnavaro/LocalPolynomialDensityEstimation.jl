@@ -2,9 +2,9 @@
 
 Estimate bivariate densities using nonparametric local polynomial procedures
 
-## Development steps
+## Development notes
 
 - `random_shape` : shape using Bezier curve from random points
-- `ìnshape` to determine if a point is inside the shape or not
+- `inside` to determine if a point is inside the window boundary or not
 - `Window` type with a polygon as boundary
 - `Image` type that contains a polynomial and a window
