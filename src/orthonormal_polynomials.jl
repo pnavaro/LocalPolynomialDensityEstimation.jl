@@ -44,7 +44,7 @@ end
 
 function integral( m :: Monomial, w :: Window )
 
-    s = sum(m(x=>px, y=>py) for px in z.x, py in z.y if inshape(Point(px,py), w.boundary))
+    s = sum(m(x=>px, y=>py) for px in w.x, py in w.y if inshape(Point(px,py), w.boundary))
 
     return s * z.dx * z.dy
 

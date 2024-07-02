@@ -1,16 +1,8 @@
-export Point
-
-struct Point
-    x :: Float64
-    y :: Float64
-end
-
-Base.:(==)(a::Point, b::Point) = ( a.x ≈ b.x) && ( a.y ≈ b.y )
-
-export inshape
+export inside
 
 # Checking if a point is inside a shape
-function inshape(point, shape)
+function inside(point, w :: Window)
+    shape = w.boundary
 	num_vertices = length(shape)
 	x, y = point.x, point.y
 	inside = false

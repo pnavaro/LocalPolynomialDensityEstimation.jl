@@ -29,10 +29,21 @@ end
 
 plist = usual_polynomials(3)
 
+@polyvar x y
 plist[1](x=>1, y=>2)
 
-u = plist[1]
-v = plist[2]
+u = plist[5]
+v = plist[6]
+
+f = u * v
+
+z = Image(f, (0,1), (0,1))
+
+typeof(f) <: AbstractPolynomialLike
+
+w = Window((0.1,0.1), (0.2,0.2))
+
+integral(u * v, w)
 
 projection(u, v, w) = integral(u * v, w) / integral(v * v, w) * v
 
@@ -57,3 +68,6 @@ function orthonormal_polynomials(deg)
   [Image( u -> u/sqrt(integral(u*u, w))) for u in out]
 
 end
+# -
+
+

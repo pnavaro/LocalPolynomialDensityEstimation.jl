@@ -28,3 +28,5 @@ plot(poly)
 w = Window( x, y)
 
 w.boundary
+
+

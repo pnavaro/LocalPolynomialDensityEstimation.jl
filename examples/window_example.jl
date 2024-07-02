@@ -13,12 +13,10 @@
 #     name: julia-1.10
 # ---
 
-# +
 using LocalPolynomialDensityEstimation
 using Plots
 using TypedPolynomials
 
-# -
 
 w = Window((0.5,1,0.5,0) , (0,1,2,1) )
 
