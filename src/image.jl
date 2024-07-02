@@ -22,14 +22,6 @@ struct Image
 
 end
 
-function Image( f :: AbstractPolynomial, w :: Window )
-
-    xrange = extrema( p.x for p in w.bounday )
-    yrange = extrema( p.y for p in w.bounday )
-
-    Image( f, xrange, yrange )
-
-end
 
 
 export integral
