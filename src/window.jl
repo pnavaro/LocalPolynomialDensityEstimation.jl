@@ -73,3 +73,12 @@ function Image( f :: AbstractPolynomial, w :: Window )
     Image( f, xrange, yrange )
 
 end
+
+@recipe function f(w::Window)
+
+    x := [p.x for p in w.boundary]
+    y := [p.y for p in w.boundary]
+    legend := false
+    ()
+ 
+end

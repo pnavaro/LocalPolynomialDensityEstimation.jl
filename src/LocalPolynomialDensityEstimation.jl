@@ -8,7 +8,7 @@ using TypedPolynomials
 include("point.jl")
 include("image.jl")
 include("window.jl")
-include("point_pattern.jl")
+include("planar_point_pattern.jl")
 include("inside.jl")
 include("orthonormal_polynomials.jl")
 include("density_estimation.jl")

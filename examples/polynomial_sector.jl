@@ -71,7 +71,7 @@ for n in NN, k in KK
     
     eps = 0.001
     
-    zero = ppp(eps, eps ^ k / 2, domain)
+    zero = PointPattern(eps, eps ^ k / 2, domain)
     data = rpoint(n, f, domain)
 
     for h in HH 
