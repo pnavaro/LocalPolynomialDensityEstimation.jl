@@ -54,7 +54,7 @@ KK = (1, 2.1)
 MM = 0:5
 
 # +
-@poyvar x y
+@polyvar x y
 
 for n in NN, k in KK 
     # closest points that are not NA
