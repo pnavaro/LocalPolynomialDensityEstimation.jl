@@ -1,7 +1,7 @@
 export inside
 
 # Checking if a point is inside a shape
-function inside(point, w :: Window)
+function inside(point, w :: ObservationWindow)
     shape = w.boundary
 	num_vertices = length(shape)
 	x, y = point.x, point.y

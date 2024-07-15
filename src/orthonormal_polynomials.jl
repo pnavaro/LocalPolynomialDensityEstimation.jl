@@ -42,7 +42,7 @@ function usual_polynomials(deg :: Int)
     out
 end
 
-function integral( m :: Monomial, w :: Window )
+function integral( m :: Monomial, w :: ObservationWindow )
 
     s = sum(m(x=>px, y=>py) for px in w.x, py in w.y if inshape(Point(px,py), w.boundary))
 

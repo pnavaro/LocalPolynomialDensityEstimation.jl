@@ -4,11 +4,11 @@ export PlanarPointPattern
 struct PlanarPointPattern
 
     points :: Vector{Point}
-    window :: Window
+    window :: ObservationWindow
 
     function PlanarPointPattern( npoints )
 
-        new( [Point(rand(),rand()) for i in 1:npoints], Window((0,1), (0,1)))    
+        new( [Point(rand(),rand()) for i in 1:npoints], ObservationWindow((0,1), (0,1)))    
 
     end
 

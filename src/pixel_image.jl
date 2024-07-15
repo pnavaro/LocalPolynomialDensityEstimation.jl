@@ -1,6 +1,6 @@
-export Image
+export PixelImage
 
-struct Image
+struct PixelImage
 
     f :: AbstractPolynomialLike
     x :: Vector{Float64}
@@ -8,7 +8,7 @@ struct Image
     dx :: Float64
     dy :: Float64
 
-    function Image( f :: AbstractPolynomialLike, xrange, yrange )
+    function PixelImage( f :: AbstractPolynomialLike, xrange, yrange )
 
         dx = (xrange[2] - xrange[1]) / IMG_SIZE
         dy = (yrange[2] - yrange[1]) / IMG_SIZE
@@ -26,7 +26,7 @@ end
 
 export integral
 
-function integral( z :: Image) 
+function integral( z :: PixelImage) 
 
     @polyvar x y
 
@@ -37,8 +37,8 @@ function integral( z :: Image)
 end
 
 
-Base.:(*)(u::Image, v::Image) = Image( u.f * v.f, u.w )
+Base.:(*)(u::PixelImage, v::PixelImage) = PixelImage( u.f * v.f, u.w )
 
-Base.:(-)(u::Image, v::Image) = Image( u.f - v.f, u.w )
+Base.:(-)(u::PixelImage, v::PixelImage) = PixelImage( u.f - v.f, u.w )
 
-Base.:(*)(u::Image, v::Float64) = Image( u.f * v, u.w )
+Base.:(*)(u::PixelImage, v::Float64) = PixelImage( u.f * v, u.w )

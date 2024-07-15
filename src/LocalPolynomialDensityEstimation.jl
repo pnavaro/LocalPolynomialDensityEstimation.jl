@@ -6,8 +6,8 @@ import Statistics: mean
 using TypedPolynomials
 
 include("point.jl")
-include("image.jl")
-include("window.jl")
+include("pixel_image.jl")
+include("observation_window.jl")
 include("planar_point_pattern.jl")
 include("inside.jl")
 include("orthonormal_polynomials.jl")

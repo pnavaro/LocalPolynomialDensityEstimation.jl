@@ -1,14 +1,14 @@
 using TypedPolynomials
 
-export Window
+export ObservationWindow
 
 const IMG_SIZE = 128
 
-struct Window
+struct ObservationWindow
 
     boundary :: Vector{Point}
 
-    function Window( x,  y)
+    function ObservationWindow( x,  y)
 
         if length(x) == length(y) == 2
 
@@ -34,18 +34,19 @@ struct Window
 
     end
 
-    function Window( boundary )
+    function ObservationWindow( boundary )
 
        if first(boundary) == last(boundary)
            new( boundary )
        else
            new( vcat(boundary,first(boundary)))
        end
+
     end
 
 end
 
-function integral( poly :: AbstractPolynomialLike, w :: Window )
+function integral( poly :: AbstractPolynomialLike, w :: ObservationWindow )
 
     @polyvar x y
 
@@ -55,7 +56,7 @@ function integral( poly :: AbstractPolynomialLike, w :: Window )
 
 end
 
-function integral( z :: Image, w :: Window )
+function integral( z :: PixelImage, w :: ObservationWindow )
 
     @polyvar x y
 
@@ -65,16 +66,16 @@ function integral( z :: Image, w :: Window )
 
 end
 
-function Image( f :: AbstractPolynomial, w :: Window )
+function PixelImage( f :: AbstractPolynomial, w :: ObservationWindow )
 
     xrange = extrema( p.x for p in w.bounday )
     yrange = extrema( p.y for p in w.bounday )
 
-    Image( f, xrange, yrange )
+    PixelImage( f, xrange, yrange )
 
 end
 
-@recipe function f(w::Window)
+@recipe function f(w::ObservationWindow)
 
     x := [p.x for p in w.boundary]
     y := [p.y for p in w.boundary]
