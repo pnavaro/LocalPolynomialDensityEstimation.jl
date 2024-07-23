@@ -2,10 +2,15 @@ using TypedPolynomials
 
 export ObservationWindow
 
-const IMG_SIZE = 128
 
+"""
+$(TYPEDEF)
+
+$(FIELDS)
+"""
 struct ObservationWindow
 
+    "Polygonal boundary of window"
     boundary :: Vector{Point}
 
     function ObservationWindow( x,  y)
@@ -46,32 +51,13 @@ struct ObservationWindow
 
 end
 
-function integral( poly :: AbstractPolynomialLike, w :: ObservationWindow )
+function integral( f :: AbstractPolynomialLike, w :: ObservationWindow )
 
     @polyvar x y
 
-    s = sum(poly(x => px, y => py) for px in z.x, py in z.y if inside(Point(px,py), w))
+    s = sum(f(x => px, y => py) for px in z.x, py in z.y if inside(Point(px,py), w))
 
     return s * z.dx * z.dy
-
-end
-
-function integral( z :: PixelImage, w :: ObservationWindow )
-
-    @polyvar x y
-
-    s = sum(z.f(x => px, y => py) for px in z.x, py in z.y if inside(Point(px,py), w))
-
-    return s * z.dx * z.dy
-
-end
-
-function PixelImage( f :: AbstractPolynomial, w :: ObservationWindow )
-
-    xrange = extrema( p.x for p in w.bounday )
-    yrange = extrema( p.y for p in w.bounday )
-
-    PixelImage( f, xrange, yrange )
 
 end
 
@@ -83,3 +69,4 @@ end
     ()
  
 end
+

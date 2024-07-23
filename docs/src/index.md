@@ -9,6 +9,3 @@ Documentation for [LocalPolynomialDensityEstimation](https://github.com/pnavaro/
 ```@index
 ```
 
-```@autodocs
-Modules = [LocalPolynomialDensityEstimation]
-```

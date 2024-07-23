@@ -9,7 +9,7 @@ packages <- installed.packages()
 
 for(pkg in deps) {
     if(!is.element(pkg, packages[,1])){
-        install.packages(pkg, quiet = TRUE)
+        install.packages(pkg, quiet = FALSE)
     }
 }
 

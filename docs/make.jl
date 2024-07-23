@@ -5,7 +5,7 @@ DocMeta.setdocmeta!(LocalPolynomialDensityEstimation, :DocTestSetup, :(using Loc
 
 makedocs(;
     modules=[LocalPolynomialDensityEstimation],
-    authors="Pierre Navaro <pierre.navaro@math.cnrs.fr> and contributors",
+    authors="Pierre Navaro and Nicolas Klutchnikov",
     sitename="LocalPolynomialDensityEstimation.jl",
     format=Documenter.HTML(;
         canonical="https://pnavaro.github.io/LocalPolynomialDensityEstimation.jl",
@@ -14,6 +14,8 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
+        "Observation Window" => "observation_window.md",
+        "Pixel Image" => "pixel_image.md"
     ],
 )
 

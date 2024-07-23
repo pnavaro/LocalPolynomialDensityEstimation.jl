@@ -61,9 +61,9 @@ function get_bezier_curve(a, r, edgy)
 end
 
 
-function get_random_points(n, scale; mindst = nothing, rec = 0)
+function get_random_points(rng, n, scale; mindst = nothing, rec = 0)
     mindst = isnothing(mindst) ? 0.7 / n : mindst
-    a = rand(2, n)
+    a = rand(rng, (2, n))
     da = diff(ccw_sort(a), dims = 2)
     d = sqrt.(sum(da, dims = 1) .^ 2)
     if all(d .>= mindst) || rec >= 200
@@ -74,6 +74,8 @@ function get_random_points(n, scale; mindst = nothing, rec = 0)
 end
 
 export random_shape
+
+#=
 
 """ 
 $(SIGNATURES)
@@ -93,6 +95,7 @@ function random_shape(; rad = 0.2, edgy = 0.05, n = 7, scale = 1)
 
 end
 
+=#
 
 @recipe function f(shape::Vector{Point})
 
@@ -101,3 +104,4 @@ end
     ()
 
 end
+
