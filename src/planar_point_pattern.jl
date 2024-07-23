@@ -3,12 +3,12 @@ export PlanarPointPattern
 
 struct PlanarPointPattern
 
-    points :: Vector{Point}
-    window :: ObservationWindow
+    points::Vector{Point}
+    window::ObservationWindow
 
-    function PlanarPointPattern( npoints )
+    function PlanarPointPattern(npoints)
 
-        new( [Point(rand(),rand()) for i in 1:npoints], ObservationWindow((0,1), (0,1)))    
+        new([Point(rand(), rand()) for i = 1:npoints], ObservationWindow((0, 1), (0, 1)))
 
     end
 
@@ -19,13 +19,13 @@ end
 
     @series begin
 
-    x := [p.x for p in ppp.points]
-    y := [p.y for p in ppp.points]
-    seriestype := :scatter
-    legend := false
-    markerstrokewidth := 0
+        x := [p.x for p in ppp.points]
+        y := [p.y for p in ppp.points]
+        seriestype := :scatter
+        legend := false
+        markerstrokewidth := 0
 
-    ()
+        ()
 
     end
 

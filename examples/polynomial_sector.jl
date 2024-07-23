@@ -6,7 +6,7 @@
 #       extension: .jl
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.16.2
+#       jupytext_version: 1.16.3
 #   kernelspec:
 #     display_name: Julia 1.10.4
 #     language: julia
@@ -18,34 +18,15 @@ using TypedPolynomials
 
 x=(0.5,1,0.5,0) 
 y=(0,1,2,1) 
-w = Window( x, y)
+w = ObservationWindow( x, y)
 
+
+polynomial_sector(1)
 
 # +
-function polynomial_sector(k; npoly = 128)
+f_norm( 0.5, 0.5, 1)
 
-    x1 = (1, 1)
-    y1 = (0, 1)
-    x2 = LinRange(1, 0, npoly)
-    y2 = x2.^k
-    x3 = (0, 1)
-    y3 = (0, 0)
 
-    x = vcat(x1..., x2..., x3...)
-    y = vcat(y1..., y2..., y3...)
-    
-    Window(x, y)
-        
-end
-
-function f_poly(x, y, k)
-    domain = polynomial_sector(k)
-    a = 0.6
-    b = 0.2
-    g = (u, v) -> abs(u - a)^2 + abs(v - b)^2
-    A = integral(Image(g, domain), domain)
-    g(x, y) / A
-end
 # -
 
 NN = (200, 500, 1000, 2000)

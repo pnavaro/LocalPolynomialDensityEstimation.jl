@@ -11,51 +11,53 @@ $(FIELDS)
 struct ObservationWindow
 
     "Polygonal boundary of window"
-    boundary :: Vector{Point}
+    boundary::Vector{Point}
 
-    function ObservationWindow( x,  y)
+    function ObservationWindow(x, y)
 
         if length(x) == length(y) == 2
 
-            boundary = [Point(x[1], y[1]), 
-                        Point(x[2], y[1]),
-                        Point(x[2], y[2]),
-                        Point(x[1], y[2]),
-                        Point(x[1], y[1])]
+            boundary = [
+                Point(x[1], y[1]),
+                Point(x[2], y[1]),
+                Point(x[2], y[2]),
+                Point(x[1], y[2]),
+                Point(x[1], y[1]),
+            ]
 
-            new( boundary )
+            new(boundary)
 
         else
 
-            boundary = [Point(i,j) for (i,j) in zip(x,y)]
+            boundary = [Point(i, j) for (i, j) in zip(x, y)]
 
             if first(boundary) == last(boundary)
-                new( boundary )
+                new(boundary)
             else
-                new( vcat(boundary,first(boundary)))
+                new(vcat(boundary, first(boundary)))
             end
 
         end
 
     end
 
-    function ObservationWindow( boundary )
+    function ObservationWindow(boundary)
 
-       if first(boundary) == last(boundary)
-           new( boundary )
-       else
-           new( vcat(boundary,first(boundary)))
-       end
+        if first(boundary) == last(boundary)
+            new(boundary)
+        else
+            new(vcat(boundary, first(boundary)))
+        end
 
     end
 
 end
 
-function integral( f :: AbstractPolynomialLike, w :: ObservationWindow )
+function integral(f::AbstractPolynomialLike, w::ObservationWindow)
 
     @polyvar x y
 
-    s = sum(f(x => px, y => py) for px in z.x, py in z.y if inside(Point(px,py), w))
+    s = sum(f(x => px, y => py) for px in z.x, py in z.y if inside(Point(px, py), w))
 
     return s * z.dx * z.dy
 
@@ -67,6 +69,5 @@ end
     y := [p.y for p in w.boundary]
     legend := false
     ()
- 
-end
 
+end

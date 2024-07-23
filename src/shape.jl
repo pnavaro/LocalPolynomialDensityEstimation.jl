@@ -1,7 +1,7 @@
 bernstein(n, k, t) = binomial(n, k) .* t .^ k .* (1 .- t) .^ (n - k)
 
 function bezier(points, num)
-    n = size(points,2)
+    n = size(points, 2)
     t = LinRange(0, 1, num)
     curve = zeros((2, num))
     for i = 1:n
@@ -27,7 +27,7 @@ function get_curve(points, r)
     curve = Matrix{Float64}[]
     npoints = size(points, 2)
     for i = 1:(npoints-1)
-        p1 = points[1:2,i]
+        p1 = points[1:2, i]
         p2 = points[1:2, i+1]
         a1 = points[3, i]
         a2 = points[3, i+1]
@@ -48,7 +48,7 @@ function get_bezier_curve(a, r, edgy)
     a = ccw_sort(a)
     a = hcat(a, a[:, 1])
     d = diff(a, dims = 2)
-    ang = atan.(d[2, :], d[1,:])
+    ang = atan.(d[2, :], d[1, :])
     f(ang) = (ang >= 0) * ang + (ang < 0) * (ang + 2pi)
     ang = f.(ang)
     ang1 = ang
@@ -89,7 +89,7 @@ Create a random shape by creating `n` random points in the unit square, which ar
 Reference : https://stackoverflow.com/questions/50731785/create-random-shape-contour-using-matplotlib
 """
 function random_shape(; rad = 0.2, edgy = 0.05, n = 7, scale = 1)
-    
+
     p = get_random_points(n, scale)
     [Point(p...) for p in eachcol(get_bezier_curve(p, rad, edgy))]
 
@@ -104,4 +104,3 @@ end
     ()
 
 end
-

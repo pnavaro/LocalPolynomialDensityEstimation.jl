@@ -13,5 +13,6 @@ include("inside.jl")
 include("orthonormal_polynomials.jl")
 include("density_estimation.jl")
 include("shape.jl")
+include("polynomial_sector.jl")
 
 end
