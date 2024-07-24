@@ -1,3 +1,19 @@
+# ---
+# jupyter:
+#   jupytext:
+#     cell_metadata_filter: -all
+#     formats: ipynb,jl:light
+#     text_representation:
+#       extension: .jl
+#       format_name: light
+#       format_version: '1.5'
+#       jupytext_version: 1.16.3
+#   kernelspec:
+#     display_name: Julia 1.10.4
+#     language: julia
+#     name: julia-1.10
+# ---
+
 using LocalPolynomialDensityEstimation
 using Plots
 
@@ -25,7 +41,7 @@ poly = [Point(i,j) for (i,j) in zip(x,y)]
 
 plot(poly)
 
-w = Window( x, y)
+w = ObservationWindow( x, y)
 
 w.boundary
 
