@@ -24,6 +24,19 @@ struct PlanarPointPattern
 
     end
 
+    function PlanarPointPattern(x::Real, y::Real, w::ObservationWindow)
+
+        new([Point(x,y)], w)
+
+    end
+
+    function PlanarPointPattern(x::AbstractVector, y::AbstractVector, w::ObservationWindow)
+
+        new(Point.(x,y), w) 
+
+    end
+
+
     function PlanarPointPattern(n::Int, f::Function, w::ObservationWindow; 
                                 fmax = 1.0, verbose = false)
         pbar = 1

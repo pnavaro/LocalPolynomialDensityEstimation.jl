@@ -26,13 +26,6 @@ X = @rget X
 scatter(X[:x], X[:y])
 # -
 
-X[:window]
-
-R"win <- owin(c(0,1), c(0,1))"
-@rget win
-
-result = @rget result
-
 scatter(result[:x], result[:y])
 
 # +

@@ -29,7 +29,7 @@ struct ObservationWindow
 
         else
 
-            boundary = [Point(i, j) for (i, j) in zip(x, y)]
+            boundary = Point.(x, y)
 
             if first(boundary) == last(boundary)
                 new(boundary)
