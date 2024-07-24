@@ -111,5 +111,3 @@ end
 
 
 ObservationWindow(z::PixelImage) = ObservationWindow(z.x, z.y)
-
-Pixel
