@@ -38,21 +38,25 @@ function f_norm(x, y, k)
 
     A = 0.0
 
-    for px in vx, py in vy 
+    for px in vx, py in vy
 
         if inside(Point(px, py), w)
 
-            A += ( exp(-((px - a1)^2 + (py - b1)^2) / (2 * 0.4^2)) 
-                 + exp(-((px - a2)^2 + (py - b2)^2) / (2 * 0.15^2)))
+            A += (
+                exp(-((px - a1)^2 + (py - b1)^2) / (2 * 0.4^2)) +
+                exp(-((px - a2)^2 + (py - b2)^2) / (2 * 0.15^2))
+            )
 
         end
 
     end
 
-    g = ( exp(-((x - a1)^2 + (y - b1)^2) / (2 * 0.4^2)) 
-        + exp(-((x - a2)^2 + (y - b2)^2) / (2 * 0.15^2)))
+    g = (
+        exp(-((x - a1)^2 + (y - b1)^2) / (2 * 0.4^2)) +
+        exp(-((x - a2)^2 + (y - b2)^2) / (2 * 0.15^2))
+    )
 
-    return g / ( A * dx * dy )
+    return g / (A * dx * dy)
 
 end
 
@@ -76,7 +80,7 @@ function f_poly(x, y, k)
 
     A = 0.0
 
-    for px in vx, py in vy 
+    for px in vx, py in vy
 
         if inside(Point(px, py), w)
 
@@ -88,7 +92,6 @@ function f_poly(x, y, k)
 
     g = abs(x - a)^2 + abs(y - b)^2
 
-    return g / ( A * dx * dy )
+    return g / (A * dx * dy)
 
 end
-

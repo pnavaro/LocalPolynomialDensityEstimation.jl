@@ -4,6 +4,7 @@ using DocStringExtensions
 using RecipesBase
 import Statistics: mean
 using TypedPolynomials
+using Random
 
 include("point.jl")
 include("observation_window.jl")
