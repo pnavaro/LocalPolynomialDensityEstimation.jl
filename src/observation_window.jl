@@ -11,25 +11,25 @@ $(FIELDS)
 struct ObservationWindow
 
     "Polygonal boundary of window"
-    boundary::Vector{Point}
+    boundary::Vector{PlanarPoint}
 
     function ObservationWindow(x, y)
 
         if length(x) == length(y) == 2
 
             boundary = [
-                Point(x[1], y[1]),
-                Point(x[2], y[1]),
-                Point(x[2], y[2]),
-                Point(x[1], y[2]),
-                Point(x[1], y[1]),
+                PlanarPoint(x[1], y[1]),
+                PlanarPoint(x[2], y[1]),
+                PlanarPoint(x[2], y[2]),
+                PlanarPoint(x[1], y[2]),
+                PlanarPoint(x[1], y[1]),
             ]
 
             new(boundary)
 
         else
 
-            boundary = Point.(x, y)
+            boundary = PlanarPoint.(x, y)
 
             if first(boundary) == last(boundary)
                 new(boundary)
@@ -57,7 +57,7 @@ function integral(f::AbstractPolynomialLike, w::ObservationWindow)
 
     @polyvar x y
 
-    s = sum(f(x => px, y => py) for px in z.x, py in z.y if inside(Point(px, py), w))
+    s = sum(f(x => px, y => py) for px in z.x, py in z.y if inside(PlanarPoint(px, py), w))
 
     return s * z.dx * z.dy
 

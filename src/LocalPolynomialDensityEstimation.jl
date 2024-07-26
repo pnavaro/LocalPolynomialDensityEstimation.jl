@@ -5,8 +5,9 @@ using RecipesBase
 import Statistics: mean
 using TypedPolynomials
 using Random
+import Meshes
 
-include("point.jl")
+include("planar_point.jl")
 include("observation_window.jl")
 include("pixel_image.jl")
 include("planar_point_pattern.jl")

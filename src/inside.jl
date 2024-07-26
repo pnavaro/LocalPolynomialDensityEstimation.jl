@@ -5,11 +5,19 @@ $(SIGNATURES)
 
 Checking if a point is inside a observation window
 """
-function inside(point, w::ObservationWindow)
+function inside(point::PlanarPoint, w::ObservationWindow)
 
     shape = w.boundary
-    num_vertices = length(shape)
     x, y = point.x, point.y
+
+    inside(x, y, shape)
+
+end
+
+
+function inside(x::Real, y::Real, shape::Vector{PlanarPoint})
+
+    num_vertices = length(shape)
     inside = false
 
     # Store the first point in the shape and initialize the second point

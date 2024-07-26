@@ -7,7 +7,7 @@
 #       extension: .jl
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.16.3
+#       jupytext_version: 1.16.2
 #   kernelspec:
 #     display_name: Julia 1.10.4
 #     language: julia
@@ -16,6 +16,7 @@
 
 using LocalPolynomialDensityEstimation
 using Plots
+import Meshes:Ngon
 
 # Define a point to test
 point = Point(150, 85)
@@ -32,7 +33,9 @@ polygon = [
 
 # -
 
-plot(polygon)
+p = Point(3,3)
+
+supertype(typeof(p))
 
 x=(0.5,1,0.5,0) 
 y=(0,1,2,1) 

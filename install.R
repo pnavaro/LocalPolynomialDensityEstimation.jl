@@ -1,8 +1,7 @@
 deps <- c(
 "devtools", 
-"spatstat", 
-"spatstat.geom", 
-"spatstat.random" 
+"sparr", 
+"spatstat"
 )
 
 packages <- installed.packages()

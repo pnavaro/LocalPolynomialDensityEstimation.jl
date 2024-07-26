@@ -40,7 +40,7 @@ function f_norm(x, y, k)
 
     for px in vx, py in vy
 
-        if inside(Point(px, py), w)
+        if inside(PlanarPoint(px, py), w)
 
             A += (
                 exp(-((px - a1)^2 + (py - b1)^2) / (2 * 0.4^2)) +
@@ -82,7 +82,7 @@ function f_poly(x, y, k)
 
     for px in vx, py in vy
 
-        if inside(Point(px, py), w)
+        if inside(PlanarPoint(px, py), w)
 
             A += abs(px - a)^2 + abs(py - b)^2
 

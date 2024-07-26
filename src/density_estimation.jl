@@ -1,9 +1,30 @@
-function density_estimation(data, domain, at_points, resolution, bandwidth; degree = 3)
+export density_estimation
 
-    x = at_points.x
-    y = at_points.y
+"""
+$(SIGNATURES)
 
-    H = owin((x - bandwidth, x + bandwidth), (y - bandwidth, y + bandwidth))
+LocPoly Density estimation on complicated domains
+
+- `data` : The data as a `PlanarPointPattern` object
+- `domain` :  A window of class `ObservationWindow`
+- `at_points` : The points
+- `bandwidth` : The multivariate bandwidth as a named vector `(x=hx, y=hy)`
+- `degree` : The degree of the local polynomial approximation
+
+estimation of the density of the `data` (on `domain`) computed at `at_points`
+"""
+function density_estimation(
+    data::PlanarPointPattern,
+    domain::ObservationWindow,
+    at_points,
+    bandwidth;
+    degree = 3,
+)
+
+    x = [p.x for p in at_points]
+    y = [p.y for p in at_points]
+
+    H = ObservationWibndow((x - bandwidth, x + bandwidth), (y - bandwidth, y + bandwidth))
 
     neighborhood = intersect(H, domain)
 
