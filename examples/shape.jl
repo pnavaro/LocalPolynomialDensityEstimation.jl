@@ -21,19 +21,11 @@ using Plots
 s = RandomShape(; rad = 0.2, edgy = 0.1)
 
 
-plot(s)
-
 points = rand(2,100)
-random_points = [Point(p...) for p in eachcol(points)]
+random_points = [PlanarPoint(p...) for p in eachcol(points)]
 
-scatter(random_points, group=[inshape(p, s) for p in random_points])
+scatter(random_points, group=[inside(p, s) for p in random_points])
 plot!(s)
-
-import Pkg; Pkg.add("AbstractTrees")
-
-using AbstractTrees
-AbstractTrees.children(d::DataType) = subtypes(d)
-print_tree(Polygon)
 
 # +
 x1, x2 = 0.0, 1.0
@@ -45,9 +37,10 @@ square2 = Ngon((x1+α,y1+α), (x2+α,y1+α), (x2+α,y2+α), (x1+α,y2+α))
 
 # -
 
-coords(square1)
+intersect(square1, square2) 
 
+ring =  intersect(square1, square2)
 
-intersect(square1, square2) |> viz
+vertices(ring)
 
 

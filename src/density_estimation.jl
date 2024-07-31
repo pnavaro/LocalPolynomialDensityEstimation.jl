@@ -1,3 +1,22 @@
+export density
+
+"""
+$(SIGNATURES)
+"""
+function density(ppp::PlanarPointPattern, h, k = 20)
+
+    n  = length(ppp.points)
+    kdtree = KDTree(points)
+    idxs, dists = knn(kdtree, points, k)
+    
+    f = zeros(n)
+    for i = eachindex(f)
+        f[i] = sum(exp.(-d * (0.5)/h) for d in dists[i])
+    end
+    return f
+
+end
+
 export density_estimation
 
 """

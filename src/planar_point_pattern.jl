@@ -93,3 +93,5 @@ end
     @series ppp.window
 
 end
+
+npoints(ppp::PlanarPointPattern) = length(ppp.points)

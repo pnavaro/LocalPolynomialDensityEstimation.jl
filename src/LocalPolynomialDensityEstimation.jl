@@ -6,6 +6,7 @@ import Statistics: mean
 using TypedPolynomials
 using Random
 import Meshes
+using NearestNeighbors
 
 include("planar_point.jl")
 include("observation_window.jl")

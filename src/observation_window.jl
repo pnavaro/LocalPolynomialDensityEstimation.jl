@@ -29,7 +29,7 @@ struct ObservationWindow
 
         else
 
-            boundary = PlanarPoint.(x, y)
+            boundary = [PlanarPoint(px, py) for (px,py) in zip(x,y)]
 
             if first(boundary) == last(boundary)
                 new(boundary)

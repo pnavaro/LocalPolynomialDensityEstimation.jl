@@ -14,21 +14,26 @@
 # ---
 
 # +
+using LocalPolynomialDensityEstimation
+using Plots
 using RCall
 
 R"""
 library(spatstat)
 """
+# -
 
-# +
 R"""
-x <- runif(20)
-y <- runif(20)
+x <- runif(100)
+y <- runif(100)
 
 X <- ppp(x, y)
-bd <- sparr::bivariate.density(X,h0=1.5)
-plot(bd)
+bd <- density.ppp(X, h0=1.5)
 """
 bd = @rget bd
 
-bd[:z]
+contourf(bd[:v])
+
+
+
+
