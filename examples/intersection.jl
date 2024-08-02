@@ -23,7 +23,7 @@ const MAX_POINTS = 20
 Function to return x-value of point of intersection of two lines
 """
 function x_intersect(p1, p2, p3, p4)
-    num = (p1.x*p2.y - p1.y*p2.x) * (p2.x-p4.x) - (p1.x-p2.x) * (p3.x*p4.y - p3.y*p4.x)
+    num = (p1.x*p2.y - p1.y*p2.x) * (p3.x-p4.x) - (p1.x-p2.x) * (p3.x*p4.y - p3.y*p4.x)
     den = (p1.x-p2.x) * (p3.y-p4.y) - (p1.y-p2.y) * (p3.x-p4.x)
     return num/den
 end
@@ -103,26 +103,27 @@ end
 
 # # Driver code
 #
-# Defining polygon vertices in clockwise order
+# - Defining polygon vertices in clockwise order
+# - Defining clipper polygon vertices in clockwise order
+# - 1st Example with square clipper
+#
 
 poly_size = 3
 poly_points = [PlanarPoint(100,150), PlanarPoint(200,250), PlanarPoint(300,200)]
 plot(poly_points)
-
-# Defining clipper polygon vertices in clockwise order
-# 1st Example with square clipper
-
 clipper_size = 4
 clipper_points = [PlanarPoint(150,150), PlanarPoint(150,200), PlanarPoint(200,200), PlanarPoint(200,150)]
 plot!(clipper_points)
+plot!(sutherland_hodgman(poly_points, poly_size, clipper_points, clipper_size), lw=2, m=:o)
 
-# +
-# 2nd Example with triangle clipper
-# clipper_size = 3
-# clipper_points = np.array([[100,300], [300,300], [200,100]])
+# # 2nd Example with triangle clipper
 
-# Calling the clipping function
-plot!(sutherland_hodgman(poly_points, poly_size, clipper_points, clipper_size))
-# -
+poly_size = 3
+poly_points = [PlanarPoint(100,150), PlanarPoint(200,250), PlanarPoint(300,200)]
+clipper_size = 3
+clipper_points = [PlanarPoint(100,300), PlanarPoint(300,300), PlanarPoint(200,100)]
+plot(poly_points)
+plot!(clipper_points)
+plot!(sutherland_hodgman(poly_points, poly_size, clipper_points, clipper_size), lw=2, m=:o)
 
 
