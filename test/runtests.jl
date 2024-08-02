@@ -2,6 +2,7 @@ using LocalPolynomialDensityEstimation
 using Test
 using Aqua
 using MultivariatePolynomials
+import LocalPolynomialDensityEstimation: orientation
 
 @testset "LocalPolynomialDensityEstimation.jl" begin
 
@@ -26,5 +27,13 @@ using MultivariatePolynomials
 #        @test true
 #
 #    end
+
+     poly1 = [PlanarPoint(100,150), PlanarPoint(200,250), PlanarPoint(300,200)]
+     poly2 = [PlanarPoint(150,150), PlanarPoint(150,200), PlanarPoint(200,200), PlanarPoint(200,150)]
+     poly3 = [PlanarPoint(100,300), PlanarPoint(300,300), PlanarPoint(200,100)]
+
+     @test orientation(poly1) ≈ -7500.0
+     @test orientation(poly2) ≈ -2500.0
+     @test orientation(poly3) ≈ - 20000.0
 
 end
