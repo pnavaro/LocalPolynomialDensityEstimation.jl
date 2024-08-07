@@ -1,5 +1,4 @@
 export PixelImage
-using Colors, Images
 
 const IMG_SIZE = 128
 
@@ -67,6 +66,10 @@ function PixelImage(f::AbstractPolynomial, w::ObservationWindow)
 
 end
 
+ObservationWindow(z::PixelImage) = ObservationWindow(z.x, z.y)
+
+#=
+
 export image
 
 function image(z)
@@ -80,8 +83,7 @@ function image(z)
         v[j, i] = z.f(x => px, y => py)
     end
 
-    vmin = minimum(v)
-    vmax = maximum(v)
+    vmin, vmax = extrema(v)
     cmap = convert(Vector{RGB{N0f8}}, colormap("RdBu", 100))
 
     return cmap[UInt8.(round.((v .- vmin) ./ vmax .* 99) .+ 1)]
@@ -101,13 +103,13 @@ function image(z, w)
         end
     end
 
-    vmin = minimum(v)
-    vmax = maximum(v)
+    vmin, vmax = extrema(v)
     cmap = convert(Vector{RGB{N0f8}}, colormap("RdBu", 100))
 
     return cmap[UInt8.(round.((v .- vmin) ./ vmax .* 99) .+ 1)]
 
 end
 
+=#
 
-ObservationWindow(z::PixelImage) = ObservationWindow(z.x, z.y)
+

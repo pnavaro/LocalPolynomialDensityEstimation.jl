@@ -34,6 +34,12 @@ bd = @rget bd
 
 contourf(bd[:v])
 
+data = @rget X
+
+scatter(data[:x], data[:y])
+
+p1 = PlanarPointPattern( data[:x], data[:y])
+
 
 
 
