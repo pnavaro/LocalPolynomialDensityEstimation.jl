@@ -95,3 +95,46 @@ end
 end
 
 npoints(ppp::PlanarPointPattern) = length(ppp.points)
+
+export density_ppp
+
+function density_cic( ppp )
+
+    IMG_SIZE = 128
+    w = ppp.window
+    xmin, xmax = extrema(p.x for p in w.boundary)
+    ymin, ymax = extrema(p.y for p in w.boundary)
+
+    dx = (xmax - xmin) / (IMG_SIZE-1)
+    dy = (ymax - ymin) / (IMG_SIZE-1)
+
+    ρ = zeros(IMG_SIZE, IMG_SIZE)
+
+    for i in eachindex(ppp.points)
+
+        p = ppp.points[i]
+
+        xp = (p.x - xmin) / dx
+        yp = (p.y - ymin) / dy
+
+        i = floor(Int, xp) + 1
+        j = floor(Int, yp) + 1
+
+        dxp = xp - i + 1
+        dyp = yp - j + 1
+
+        a1 = (1 - dxp) * (1 - dyp)
+        a2 = dxp * (1 - dyp)
+        a3 = dxp * dyp
+        a4 = (1 - dxp) * dyp
+
+        ρ[i,   j] += a1 
+        ρ[i+1, j] += a2
+        ρ[i+1, j+1] += a3
+        ρ[i,   j+1] += a4
+        
+    end
+
+    return ρ
+
+end

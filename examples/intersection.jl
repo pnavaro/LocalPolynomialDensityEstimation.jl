@@ -30,28 +30,10 @@ plot(w1)
 plot!(w2)
 plot!(intersect(w1, w2))
 
-orientation(poly_points)
-
-orientation(clipper_points)
-
-plot!(clipper_points)
-plot!(sutherland_hodgman(poly_points, poly_size, clipper_points, clipper_size), lw=2, m=:o)
-
 # # 2nd Example with triangle clipper
 
-poly_size = 3
-poly_points = [PlanarPoint(100,150), PlanarPoint(200,250), PlanarPoint(300,200)]
-clipper_size = 3
 clipper_points = [PlanarPoint(100,300), PlanarPoint(300,300), PlanarPoint(200,100)]
-plot(poly_points)
-plot!(clipper_points)
-plot!(sutherland_hodgman(poly_points, poly_size, clipper_points, clipper_size), lw=2, m=:o)
-
-# +
-
-orientation(clipper_points)
-# -
-
-orientation(poly_points)
-
-
+w2 = ObservationWindow(clipper_points)
+plot(w1)
+plot!(w2)
+plot!(intersect(w1, w2))

@@ -1,7 +1,11 @@
 using TypedPolynomials
 
-export ObservationWindow
+function orientation(p :: Vector{PlanarPoint})
+    n = length(p)
+    sum(signarea(p[1], p[i], p[i + 1]) for i in  2:(n - 1))
+end
 
+export ObservationWindow
 
 """
 $(TYPEDEF)
@@ -82,10 +86,6 @@ function signarea(p1::PlanarPoint, p2::PlanarPoint, p3::PlanarPoint)
   ((p2.x - p1.x) * (p3.y-p1.y) - (p3.x - p1.x) * (p2.y - p1.y)) / 2
 end
 
-function orientation(p :: Vector{PlanarPoint})
-    n = length(p)
-    sum(signarea(p[1], p[i], p[i + 1]) for i in  2:(n - 1))
-end
 
 function x_intersect(p1, p2, p3, p4)
     num = (p1.x*p2.y - p1.y*p2.x) * (p3.x-p4.x) - (p1.x-p2.x) * (p3.x*p4.y - p3.y*p4.x)

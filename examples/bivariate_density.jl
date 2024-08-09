@@ -38,8 +38,10 @@ data = @rget X
 
 scatter(data[:x], data[:y])
 
-p1 = PlanarPointPattern( data[:x], data[:y])
+w1 = ObservationWindow((0,1), (0,1))
+p1 = PlanarPointPattern( data[:x], data[:y], w1)
 
+density_ppp(p1)
 
 
 
