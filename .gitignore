@@ -3,3 +3,4 @@
 /docs/build/
 *.swp
 /examples/.ipynb_checkpoints
+/examples/*.ipynb
