@@ -1,7 +1,7 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: ipynb,jl:light
+#     formats: ipynb,jl
 #     text_representation:
 #       extension: .jl
 #       format_name: light
