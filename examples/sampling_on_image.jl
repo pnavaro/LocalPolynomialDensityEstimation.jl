@@ -6,11 +6,11 @@
 #       extension: .jl
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.16.3
+#       jupytext_version: 1.16.4
 #   kernelspec:
-#     display_name: Julia 1.10.4
+#     display_name: Julia 1.11.0
 #     language: julia
-#     name: julia-1.10
+#     name: julia-1.11
 # ---
 
 # +
@@ -43,5 +43,7 @@ w = ObservationWindow((0.1,0.9), (0.2,0.8))
 ppp = PlanarPointPattern(n, f, w)
 
 plot(ppp, xlims=(0,1), ylims=(0,1))
+
+plot(ppp.window)
 
 

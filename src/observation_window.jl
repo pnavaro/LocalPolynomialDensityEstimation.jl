@@ -63,6 +63,19 @@ struct ObservationWindow
 
 end
 
+export boundary
+
+function boundary( w :: ObservationWindow )
+
+    xlo = minimum( p.x for p in w.boundary)
+    xhi = maximum( p.x for p in w.boundary)
+    ylo = minimum( p.y for p in w.boundary)
+    yhi = maximum( p.y for p in w.boundary)
+
+    ((xlo, xhi), (ylo, yhi))
+
+end
+
 function integral(f::AbstractPolynomialLike, w::ObservationWindow)
 
     @polyvar x y

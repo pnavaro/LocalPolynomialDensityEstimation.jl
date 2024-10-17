@@ -4,10 +4,15 @@ const IMG_SIZE = 128
 
 """
 $(TYPEDEF)
+
+- `mat` : matrix or vector containing the pixel values of the image.
+- `xcol` :	vector of x coordinates for the pixel grid
+- `yrow` :	vector of y coordinates for the pixel grid
 """
 struct PixelImage
 
     f::AbstractPolynomialLike
+    mat::Matrix{Float64}
     x::Vector{Float64}
     y::Vector{Float64}
     dx::Float64
@@ -18,10 +23,13 @@ struct PixelImage
         dx = (xrange[2] - xrange[1]) / IMG_SIZE
         dy = (yrange[2] - yrange[1]) / IMG_SIZE
 
-        x = LinRange(xrange[1], xrange[2], IMG_SIZE + 1)[1:end-1] .+ 0.5dx
-        y = LinRange(yrange[1], yrange[2], IMG_SIZE + 1)[1:end-1] .+ 0.5dy
+        xp = LinRange(xrange[1], xrange[2], IMG_SIZE + 1)[1:end-1] .+ 0.5dx
+        yp = LinRange(yrange[1], yrange[2], IMG_SIZE + 1)[1:end-1] .+ 0.5dy
 
-        new(f, x, y, dx, dy)
+        @polyvar x y
+        mat = [f(x => px, y => py) for px in xp, py in yp]
+
+        new(f, mat, xp, yp, dx, dy)
 
     end
 
@@ -29,16 +37,7 @@ end
 
 export integral
 
-function integral(z::PixelImage)
-
-    @polyvar x y
-
-    s = sum(z.f(x => px, y => py) for px in z.x, py in z.y)
-
-    return s * z.dx * z.dy
-
-end
-
+integral(z::PixelImage) = sum(mat) * z.dx * z.dy
 
 Base.:(*)(u::PixelImage, v::PixelImage) = PixelImage(u.f * v.f, u.w)
 
@@ -111,5 +110,3 @@ function image(z, w)
 end
 
 =#
-
-

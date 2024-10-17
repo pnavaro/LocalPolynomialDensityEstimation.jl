@@ -2,25 +2,19 @@
 # jupyter:
 #   jupytext:
 #     cell_metadata_filter: -all
-#     formats: ipynb,jl
+#     formats: ipynb,jl:light
 #     text_representation:
 #       extension: .jl
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.16.3
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Julia 1.11.0
 #     language: julia
 #     name: julia-1.11
 # ---
 
-# +
 using RCall
-
-R"""
-library(rngtools)
-"""
-# -
 
 R"""
 
@@ -167,45 +161,44 @@ MM <- 0:0 # 0:5
 # LOOPS
 
 R"""
-function simulate_poly( NN, KK, HH, MM)
-    for (n in NN) {
-        for (k in KK) {
-    
-            # closest points that are not NA
-    
-            if (k == 1) {idx <- c(1, 1)} else {idx <- c(1, 10)}
-    
-            domain <- polynomial_sector(k)
-            f <- function(x, y) {f_poly(x, y, k)}
-            f00 <- f(0, 0)
-                      
-            # Strangely (0,0) does not belong to domain for spatstat ! Bug?
-    
-            eps <- 0.001
-            zero <- spatstat.geom::ppp(eps, eps ^ k / 2, domain)
-            data <- spatstat.random::rpoint(n, f, win = domain)
-    
-            for (h in HH) {
-    
-                ## Risk of sparr method
-                f_sparr <- sparr::bivariate.density(data, h)$z
-                f_sparr <- as.vector(f_sparr[idx[1], idx[2]])
-                value = (f_sparr - f00) ** 2
-                cat(value)
-                
-                for (m in MM) {
-    
-                    mylp <- density_estimation(
-                                  data,
-                                  domain,
-                                  at_points = zero,
-                                  bandwidth = h,
-                                  degree = m
-                                )
-                }
+for (n in NN) {
+    for (k in KK) {
+
+        # closest points that are not NA
+
+        if (k == 1) {idx <- c(1, 1)} else {idx <- c(1, 10)}
+
+        domain <- polynomial_sector(k)
+        f <- function(x, y) {f_poly(x, y, k)}
+        f00 <- f(0, 0)
+                  
+        # Strangely (0,0) does not belong to domain for spatstat ! Bug?
+
+        eps <- 0.001
+        zero <- spatstat.geom::ppp(eps, eps ^ k / 2, domain)
+        data <- spatstat.random::rpoint(n, f, win = domain)
+
+        for (h in HH) {
+
+            ## Risk of sparr method
+            f_sparr <- sparr::bivariate.density(data, h)$z
+            f_sparr <- as.vector(f_sparr[idx[1], idx[2]])
+            value = (f_sparr - f00) ** 2
+            cat(value)
+            
+            for (m in MM) {
+
+                mylp <- density_estimation(
+                              data,
+                              domain,
+                              at_points = zero,
+                              bandwidth = h,
+                              degree = m
+                            )
             }
         }
     }
+}
 """
 
 res = @rget mylp

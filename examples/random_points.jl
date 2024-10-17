@@ -6,13 +6,14 @@
 #       extension: .jl
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.16.3
+#       jupytext_version: 1.16.4
 #   kernelspec:
-#     display_name: Julia 1.10.4
+#     display_name: Julia 1.11.0
 #     language: julia
-#     name: julia-1.10
+#     name: julia-1.11
 # ---
 
+using LocalPolynomialDensityEstimation
 using Plots
 using RCall
 R"library(spatstat.random)"
@@ -46,8 +47,6 @@ histogram(xp, bins=64, normalize=true)
 R"X <- rpoint(100)"
 X = @rget X
 
-using LocalPolynomialDensityEstimation
-
 ppp = PlanarPointPattern(100)
 
 # +
@@ -66,11 +65,6 @@ X <- rpoint(10000, function(x,y) { x})
 X = @rget X
 
 histogram(X[:x], bins=64, normalize=true)
-# -
-
-
-
-
 # +
 R"""
  # `fmax' may be omitted
