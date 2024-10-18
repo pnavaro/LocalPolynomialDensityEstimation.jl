@@ -52,7 +52,7 @@ function density_estimation(
 
     ortho_poly = orthonormal_polynomials(degree, W = neighborhood)
 
-    datum = subset_ppp(data, subset = neighborhood)
+    datum = inside(data, neighborhood)
 
     a = Float64[]
 

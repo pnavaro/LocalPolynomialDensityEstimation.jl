@@ -104,3 +104,21 @@ end
 end
 
 npoints(ppp::PlanarPointPattern) = length(ppp.points)
+
+function nncross(pattern1, pattern2)
+    
+    data1 = stack((p.x,p.y) for p in ppp1.points)
+    data2 = stack((p.x,p.y) for p in ppp2.points)
+    tree = KDTree(data1)
+    idxs, dists = nn(tree, data2)
+    data1[:, idxs]
+            
+end
+
+export subset
+
+function subset( ppp::PlanarPointPattern, window:: ObservationWindow )
+
+    PlanarPointPattern([p for p in ppp1.points if inside(p, w)], w)
+
+end
