@@ -27,10 +27,10 @@ You can define a polygonal boundary with a vector of `Point`
 
 ```@example owin
 polygon = [
-	Point(186, 14),
-	Point(186, 44),
-	Point(175, 115),
-	Point(175, 85)
+	PlanarPoint(186, 14),
+	PlanarPoint(186, 44),
+	PlanarPoint(175, 115),
+	PlanarPoint(175, 85)
 ]
 
 plot(polygon)
@@ -42,7 +42,7 @@ or using coordinates `x` and `y`
 x=(0.5,1,0.5,0)
 y=(0,1,2,1)
 
-poly = [Point(i,j) for (i,j) in zip(x,y)]
+poly = [PlanarPoint(i,j) for (i,j) in zip(x,y)]
 
 plot(poly)
 ```
@@ -51,4 +51,8 @@ plot(poly)
 w = ObservationWindow( poly )
 
 plot(w)
+```
+
+```@docs
+inside
 ```

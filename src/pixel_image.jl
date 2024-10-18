@@ -13,8 +13,8 @@ struct PixelImage
 
     f::AbstractPolynomialLike
     mat::Matrix{Float64}
-    x::Vector{Float64}
-    y::Vector{Float64}
+    xcol::Vector{Float64}
+    yrow::Vector{Float64}
     dx::Float64
     dy::Float64
 
@@ -23,13 +23,30 @@ struct PixelImage
         dx = (xrange[2] - xrange[1]) / IMG_SIZE
         dy = (yrange[2] - yrange[1]) / IMG_SIZE
 
-        xp = LinRange(xrange[1], xrange[2], IMG_SIZE + 1)[1:end-1] .+ 0.5dx
-        yp = LinRange(yrange[1], yrange[2], IMG_SIZE + 1)[1:end-1] .+ 0.5dy
+        xcol = [(i-.5)*dx for i in 1:IMG_SIZE]
+        yrow = [(j-.5)*dy for j in 1:IMG_SIZE]
 
         @polyvar x y
-        mat = [f(x => px, y => py) for px in xp, py in yp]
+        mat = [f(x => px, y => py) for px in xcol, py in yrow]
 
-        new(f, mat, xp, yp, dx, dy)
+        new(f, mat, xcol, yrow, dx, dy)
+
+    end
+
+    function PixelImage(mat, xrange, yrange)
+
+        nrow, ncol = size(mat)
+
+        dx = (xrange[2] - xrange[1]) / ncol
+        dy = (yrange[2] - yrange[1]) / nrow
+
+        xcol = [(i-.5)*dx for i in 1:ncol]
+        yrow = [(j-.5)*dy for j in 1:nrow]
+
+        @polyvar x y
+        f = 0 * x + 0 * y
+
+        new(f, mat, xcol, yrow, dx, dy)
 
     end
 
@@ -37,7 +54,7 @@ end
 
 export integral
 
-integral(z::PixelImage) = sum(mat) * z.dx * z.dy
+integral(z::PixelImage) = sum(z.mat) * z.dx * z.dy
 
 Base.:(*)(u::PixelImage, v::PixelImage) = PixelImage(u.f * v.f, u.w)
 
@@ -50,7 +67,7 @@ function integral(z::PixelImage, w::ObservationWindow)
 
     @polyvar x y
 
-    s = sum(z.f(x => px, y => py) for px in z.x, py in z.y if inside(Point(px, py), w))
+    s = sum(z.f(x => px, y => py) for px in z.xcol, py in z.yrow if inside(PlanarPoint(px, py), w))
 
     return s * z.dx * z.dy
 
@@ -65,7 +82,8 @@ function PixelImage(f::AbstractPolynomial, w::ObservationWindow)
 
 end
 
-ObservationWindow(z::PixelImage) = ObservationWindow(z.x, z.y)
+ObservationWindow(z::PixelImage) = ObservationWindow(z.xcol, z.yrow)
+
 
 #=
 

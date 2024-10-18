@@ -143,9 +143,6 @@ function clip(poly_points, p1::PlanarPoint, p2::PlanarPoint)
     return new_points
 end
 
-"""
-Function to implement Sutherland–Hodgman algorithm
-"""
 function sutherland_hodgman(poly_points, clipper_points)
     
     poly_size = length(poly_points)

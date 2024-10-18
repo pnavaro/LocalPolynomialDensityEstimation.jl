@@ -2,9 +2,13 @@
 CurrentModule = LocalPolynomialDensityEstimation
 ```
 
-# LocalPolynomialDensityEstimation
+# Local Polynomial Density Estimation
 
-Documentation for [LocalPolynomialDensityEstimation](https://github.com/pnavaro/LocalPolynomialDensityEstimation.jl).
+Documentation for [LocalPolynomialDensityEstimation.jl](https://github.com/pnavaro/LocalPolynomialDensityEstimation.jl).
+
+```@docs
+RandomShape
+```
 
 ```@index
 ```

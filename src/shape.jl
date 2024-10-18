@@ -61,15 +61,15 @@ function get_bezier_curve(a, r, edgy)
 end
 
 
-function get_random_points(n, scale; mindst = nothing, rec = 0)
+function get_random_points(rng, n, scale; mindst = nothing, rec = 0)
     mindst = isnothing(mindst) ? 0.7 / n : mindst
-    a = rand(2, n)
+    a = rand(rng, 2, n)
     da = diff(ccw_sort(a), dims = 2)
     d = sqrt.(sum(da, dims = 1) .^ 2)
     if all(d .>= mindst) || rec >= 200
         return a * scale
     else
-        return get_random_points(n, scale; mindst = mindst, rec = rec + 1)
+        return get_random_points(rng, n, scale; mindst = mindst, rec = rec + 1)
     end
 end
 
@@ -87,9 +87,9 @@ Create a random shape by creating `n` random points in the unit square, which ar
 
 Reference : https://stackoverflow.com/questions/50731785/create-random-shape-contour-using-matplotlib
 """
-function RandomShape(; rad = 0.2, edgy = 0.05, n = 7, scale = 1)
+function RandomShape(rng :: AbstractRNG; rad = 0.2, edgy = 0.05, n = 7, scale = 1)
 
-    p = get_random_points(n, scale)
+    p = get_random_points(rng, n, scale)
     ObservationWindow([PlanarPoint(p...) for p in eachcol(get_bezier_curve(p, rad, edgy))])
 
 end

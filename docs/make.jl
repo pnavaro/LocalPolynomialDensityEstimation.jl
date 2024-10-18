@@ -21,6 +21,7 @@ makedocs(;
         "Home" => "index.md",
         "Observation Window" => "observation_window.md",
         "Pixel Image" => "pixel_image.md",
+        "Planar Point Pattern" => "planar_point_pattern.md",
     ],
 )
 

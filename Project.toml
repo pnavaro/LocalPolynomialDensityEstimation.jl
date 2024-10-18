@@ -1,6 +1,6 @@
 name = "LocalPolynomialDensityEstimation"
 uuid = "83fb4684-3fee-4d04-98f8-7882db2935bc"
-authors = ["Pierre Navaro <pierre.navaro@math.cnrs.fr> and contributors"]
+authors = ["Nicolas Klutchnikov and Pierre Navaro"]
 version = "0.1.0"
 
 [deps]

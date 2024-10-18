@@ -29,8 +29,3 @@ z = PixelImage(f, (0,1), (0,1))
 
 integral(z)
 ```
-
-
-```@example image
-image(z)
-```

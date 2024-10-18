@@ -36,7 +36,6 @@ struct PlanarPointPattern
 
     end
 
-
     function PlanarPointPattern(
         n::Int,
         f::Function,
@@ -75,6 +74,16 @@ struct PlanarPointPattern
         end
     end
 
+    function PlanarPointPattern( image :: PixelImage, window :: ObservationWindow )
+        
+        xp = repeat(image.xcol, outer = length(image.yrow))
+        yp = repeat(image.yrow, inner = length(image.xcol))
+        points = [PlanarPoint(x,y) for (x,y) in zip(xp,yp) if inside(PlanarPoint(x,y), window)]
+
+        new(points, window)
+        
+    end
+
 end
 
 
@@ -95,6 +104,3 @@ end
 end
 
 npoints(ppp::PlanarPointPattern) = length(ppp.points)
-
-export density_ppp
-
