@@ -29,3 +29,25 @@ z = PixelImage(f, (0,1), (0,1))
 
 integral(z)
 ```
+
+
+```@example image
+mat = rand(30, 40)
+img = PixelImage(mat, (0,1), (0,1))
+
+contourf(img)
+```
+
+```@example image
+rng = Xoshiro(43)
+s = RandomShape(rng; rad = 0.2, edgy = 0.1)
+plot(s)
+```
+
+```@example image
+mat = zeros(40, 60)
+z = PixelImage(mat, (0,1), (0,1))
+
+plot(PlanarPointPattern(z, s))
+```
+

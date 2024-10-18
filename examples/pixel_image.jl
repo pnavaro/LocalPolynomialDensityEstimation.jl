@@ -1,7 +1,7 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: ipynb,jl:light
+#     formats: ipynb,jl
 #     text_representation:
 #       extension: .jl
 #       format_name: light
@@ -15,43 +15,19 @@
 
 using LocalPolynomialDensityEstimation
 using Plots
-using RCall
 
-R"""
-library(spatstat.geom)
-vec <- rnorm(1200)
-mat <- matrix(vec, nrow=30, ncol=40)
-whitenoise <- im(mat, xrange=c(0,1), yrange=c(0,1))
-"""
+mat = rand(30, 40)
+img = PixelImage(mat, (0,1), (0,1))
 
-z = @rget whitenoise
+contourf(img)
 
-contourf(reshape(z[:v], 30, 40))
+rng = Xoshiro(43)
+s = RandomShape(rng; rad = 0.2, edgy = 0.1)
+plot(s)
 
-R"""
-im <- whitenoise
-xcol <- im$xcol
-yrow <- im$yrow
-x = rep(xcol, times = length(yrow))
-y = rep(yrow, each = length(xcol))
-"""
-xcol = @rget xcol
-yrow = @rget yrow
+mat = zeros(40, 60)
+z = PixelImage(mat, (0,1), (0,1))
 
-y
-
-xcol = collect(LinRange(0, 1, 30)[1:end-1])
-
-repeat(xcol, length(yrow))
-
-x
-
-R"im$xcol"
-
-
-
-LinRange(0, 1, 30)
-
-
+plot(PlanarPointPattern(z, s))
 
 

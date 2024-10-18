@@ -84,6 +84,12 @@ end
 
 ObservationWindow(z::PixelImage) = ObservationWindow(z.xcol, z.yrow)
 
+@recipe function f(z::PixelImage)
+
+    @series z.xcol, z.yrow, z.mat
+
+end
+
 
 #=
 
