@@ -41,7 +41,7 @@ scatter(data[:x], data[:y])
 w1 = ObservationWindow((0,1), (0,1))
 p1 = PlanarPointPattern( data[:x], data[:y], w1)
 
-density_ppp(p1)
+contourf(bivariate_density(p1, 0.1))
 
 
 
