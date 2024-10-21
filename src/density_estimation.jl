@@ -46,7 +46,7 @@ function density_estimation(
     x = [p.x for p in at_points]
     y = [p.y for p in at_points]
 
-    H = ObservationWibndow((x - bandwidth, x + bandwidth), (y - bandwidth, y + bandwidth))
+    H = ObservationWindow((x - bandwidth, x + bandwidth), (y - bandwidth, y + bandwidth))
 
     neighborhood = intersect(H, domain)
 
