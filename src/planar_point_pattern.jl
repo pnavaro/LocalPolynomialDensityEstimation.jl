@@ -105,6 +105,8 @@ end
 
 npoints(ppp::PlanarPointPattern) = length(ppp.points)
 
+export nncross
+
 function nncross(pattern1, pattern2)
     
     data1 = stack((p.x,p.y) for p in ppp1.points)
