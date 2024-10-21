@@ -20,6 +20,7 @@ PixelImage
 using LocalPolynomialDensityEstimation
 using Plots
 using TypedPolynomials
+using Random
 
 @polyvar x y
 
