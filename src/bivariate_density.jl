@@ -1,3 +1,5 @@
+export bivariate_density
+
 """
 $(SIGNATURES)
 
@@ -25,8 +27,6 @@ returns a BivariateKDE object `B` contains gridded coordinates (`B.x` and `B.y`)
 """
 function bivariate_density(ppp :: PlanarPointPattern, h0 :: Real)
  
-    w = ObservationWindow(ppp)
-
     xdata = [p.x for p in ppp.points]
     ydata = [p.y for p in ppp.points]
 
