@@ -76,16 +76,6 @@ function boundary( w :: ObservationWindow )
 
 end
 
-function integral(f::AbstractPolynomialLike, w::ObservationWindow)
-
-    @polyvar x y
-
-    s = sum(f(x => px, y => py) for px in z.x, py in z.y if inside(PlanarPoint(px, py), w))
-
-    return s * z.dx * z.dy
-
-end
-
 @recipe function f(w::ObservationWindow)
 
     x := [p.x for p in w.boundary]
