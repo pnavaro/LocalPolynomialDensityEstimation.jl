@@ -65,9 +65,7 @@ Base.:(*)(u::PixelImage, v::Float64) = PixelImage(u.f * v, u.w)
 
 function integral(z::PixelImage, w::ObservationWindow)
 
-    @polyvar x y
-
-    s = sum(z.f(x => px, y => py) for px in z.xcol, py in z.yrow if inside(PlanarPoint(px, py), w))
+    s = sum(z.mat[i,j] for i in 1:IMG_SIZE, j in 1:IMG_SIZE if inside(PlanarPoint(z.xcol[j], z.yrow[i]), w))
 
     return s * z.dx * z.dy
 
