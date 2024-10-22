@@ -17,7 +17,7 @@ using LocalPolynomialDensityEstimation
 using Plots
 
 mat = rand(30, 40)
-img = PixelImage(mat, (0,1), (0,1))
+img = PixelImage(mat, (0, 1), (0, 1))
 
 contourf(img)
 
@@ -26,8 +26,6 @@ s = RandomShape(rng; rad = 0.2, edgy = 0.1)
 plot(s)
 
 mat = zeros(40, 60)
-z = PixelImage(mat, (0,1), (0,1))
+z = PixelImage(mat, (0, 1), (0, 1))
 
 plot(PlanarPointPattern(z, s))
-
-

@@ -2,17 +2,24 @@ export polynomial_sector
 
 function polynomial_sector(k; npoly = 128)
 
-    x1 = (1, 1)
-    y1 = (0, 1)
-    x2 = LinRange(1, 0, npoly)
-    y2 = x2 .^ k
-    x3 = (0, 1)
-    y3 = (0, 0)
+    @assert k > 0
 
-    x = vcat(x1..., x2..., x3...)
-    y = vcat(y1..., y2..., y3...)
+    x1 = 1
+    y1 = 0
+    if k > 1
+        x2 = LinRange(1, 0, npoly)
+        y2 = x2 .^ k
+    else
+        x2 = [1, 0]
+        y2 = [1, 0]
+    end
+    x3 = 1
+    y3 = 0
 
-    ObservationWindow(x, y)
+    x = vcat(x1, x2..., x3)
+    y = vcat(y1, y2..., y3)
+
+    ObservationWindow(PlanarPoint.(x, y))
 
 end
 

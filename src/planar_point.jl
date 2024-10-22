@@ -6,5 +6,3 @@ struct PlanarPoint
 end
 
 Base.:(==)(a::PlanarPoint, b::PlanarPoint) = (a.x ≈ b.x) && (a.y ≈ b.y)
-
-

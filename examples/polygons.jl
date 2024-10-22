@@ -20,23 +20,21 @@ using Plots
 
 # Define a polygon
 polygon = [
-	PlanarPoint(186, 14),
-	PlanarPoint(186, 44),
-	PlanarPoint(175, 115),
-	PlanarPoint(175, 85)
+    PlanarPoint(186, 14),
+    PlanarPoint(186, 44),
+    PlanarPoint(175, 115),
+    PlanarPoint(175, 85),
 ]
 
-x=(0.5,1,0.5,0) 
-y=(0,1,2,1) 
+x = (0.5, 1, 0.5, 0)
+y = (0, 1, 2, 1)
 
-poly = [PlanarPoint(i,j) for (i,j) in zip(x,y)]
+poly = [PlanarPoint(i, j) for (i, j) in zip(x, y)]
 
 plot(poly)
 
-w = ObservationWindow( x, y)
+w = ObservationWindow(x, y)
 
 w.boundary
 
 plot(w)
-
-

@@ -8,13 +8,19 @@ struct PlanarPointPattern
 
     function PlanarPointPattern(npoints)
 
-        new([PlanarPoint(rand(), rand()) for i = 1:npoints], ObservationWindow((0, 1), (0, 1)))
+        new(
+            [PlanarPoint(rand(), rand()) for i = 1:npoints],
+            ObservationWindow((0, 1), (0, 1)),
+        )
 
     end
 
     function PlanarPointPattern(rng::AbstractRNG, npoints)
 
-        new([PlanarPoint(rand(rng, 2)...) for i = 1:npoints], ObservationWindow((0, 1), (0, 1)))
+        new(
+            [PlanarPoint(rand(rng, 2)...) for i = 1:npoints],
+            ObservationWindow((0, 1), (0, 1)),
+        )
 
     end
 
@@ -74,14 +80,16 @@ struct PlanarPointPattern
         end
     end
 
-    function PlanarPointPattern( image :: PixelImage, window :: ObservationWindow )
-        
+    function PlanarPointPattern(image::PixelImage, window::ObservationWindow)
+
         xp = repeat(image.xcol, outer = length(image.yrow))
         yp = repeat(image.yrow, inner = length(image.xcol))
-        points = [PlanarPoint(x,y) for (x,y) in zip(xp,yp) if inside(PlanarPoint(x,y), window)]
+        points = [
+            PlanarPoint(x, y) for (x, y) in zip(xp, yp) if inside(PlanarPoint(x, y), window)
+        ]
 
         new(points, window)
-        
+
     end
 
 end
@@ -108,18 +116,18 @@ npoints(ppp::PlanarPointPattern) = length(ppp.points)
 export nncross
 
 function nncross(pattern1, pattern2)
-    
-    data1 = stack((p.x,p.y) for p in ppp1.points)
-    data2 = stack((p.x,p.y) for p in ppp2.points)
+
+    data1 = stack((p.x, p.y) for p in ppp1.points)
+    data2 = stack((p.x, p.y) for p in ppp2.points)
     tree = KDTree(data1)
     idxs, dists = nn(tree, data2)
     data1[:, idxs]
-            
+
 end
 
 export subset
 
-function subset( ppp::PlanarPointPattern, window:: ObservationWindow )
+function subset(ppp::PlanarPointPattern, window::ObservationWindow)
 
     PlanarPointPattern([p for p in ppp1.points if inside(p, w)], w)
 

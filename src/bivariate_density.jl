@@ -25,8 +25,8 @@ bivariate standard normal smoothing kernel.
 returns a BivariateKDE object `B` contains gridded coordinates (`B.x` and `B.y`) and the bivariate density estimate (`B.density`).
 
 """
-function bivariate_density(ppp :: PlanarPointPattern, h0 :: Real)
- 
+function bivariate_density(ppp::PlanarPointPattern, h0::Real)
+
     xdata = [p.x for p in ppp.points]
     ydata = [p.y for p in ppp.points]
 

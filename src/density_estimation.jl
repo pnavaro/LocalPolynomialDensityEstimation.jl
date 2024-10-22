@@ -1,24 +1,24 @@
 export density_estimation
 
-function grid_from_pixelimage( p :: PixelImage, w :: ObservationWindow) 
-# 
-#     points = PlanarPoinPattern(
-#       x = rep(im$xcol, times = length(im$yrow)),
-#       y = rep(im$yrow, each = length(im$xcol)),
-#       window = spatstat.geom::as.owin(im),
-#       check = FALSE
-#     )
-#     points_inside_owin(points, W)
-# 
+function grid_from_pixelimage(p::PixelImage, w::ObservationWindow)
+    # 
+    #     points = PlanarPoinPattern(
+    #       x = rep(im$xcol, times = length(im$yrow)),
+    #       y = rep(im$yrow, each = length(im$xcol)),
+    #       window = spatstat.geom::as.owin(im),
+    #       check = FALSE
+    #     )
+    #     points_inside_owin(points, W)
+    # 
 end
- 
-function nn_im_grid(x, y, p :: PixelImage, w :: ObservationWindow)
-# 
-#     v = PlanarPointPattern(x, y, w)
-#     grid = grid_from_im(p, w)
-#     n = nncross(v, grid).which
-#     grid.x[n], grid.y[n]
-# 
+
+function nn_im_grid(x, y, p::PixelImage, w::ObservationWindow)
+    # 
+    #     v = PlanarPointPattern(x, y, w)
+    #     grid = grid_from_im(p, w)
+    #     n = nncross(v, grid).which
+    #     grid.x[n], grid.y[n]
+    # 
 end
 
 

@@ -87,7 +87,7 @@ Create a random shape by creating `n` random points in the unit square, which ar
 
 Reference : https://stackoverflow.com/questions/50731785/create-random-shape-contour-using-matplotlib
 """
-function RandomShape(rng :: AbstractRNG; rad = 0.2, edgy = 0.05, n = 7, scale = 1)
+function RandomShape(rng::AbstractRNG; rad = 0.2, edgy = 0.05, n = 7, scale = 1)
 
     p = get_random_points(rng, n, scale)
     ObservationWindow([PlanarPoint(p...) for p in eachcol(get_bezier_curve(p, rad, edgy))])

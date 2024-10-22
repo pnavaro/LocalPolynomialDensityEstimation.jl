@@ -23,9 +23,14 @@ using Plots
 # - 1st Example with square clipper
 #
 
-poly_points = [PlanarPoint(100,150), PlanarPoint(200,250), PlanarPoint(300,200)]
+poly_points = [PlanarPoint(100, 150), PlanarPoint(200, 250), PlanarPoint(300, 200)]
 w1 = ObservationWindow(poly_points)
-clipper_points = [PlanarPoint(150,150), PlanarPoint(150,200), PlanarPoint(200,200), PlanarPoint(200,150)]
+clipper_points = [
+    PlanarPoint(150, 150),
+    PlanarPoint(150, 200),
+    PlanarPoint(200, 200),
+    PlanarPoint(200, 150),
+]
 w2 = ObservationWindow(clipper_points)
 plot(w1)
 plot!(w2)
@@ -33,10 +38,8 @@ plot!(intersect(w1, w2))
 
 # # 2nd Example with triangle clipper
 
-clipper_points = [PlanarPoint(100,300), PlanarPoint(300,300), PlanarPoint(200,100)]
+clipper_points = [PlanarPoint(100, 300), PlanarPoint(300, 300), PlanarPoint(200, 100)]
 w2 = ObservationWindow(clipper_points)
 plot(w1)
 plot!(w2)
 plot!(intersect(w1, w2))
-
-

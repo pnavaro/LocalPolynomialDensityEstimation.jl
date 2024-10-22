@@ -25,23 +25,23 @@ R"library(spatstat.random)"
 # Construct the CDF numerically and find the closest value 
 
 # +
-function rpoint( n, f )
+function rpoint(n, f)
     xmin, xmax = 0.0, 1.0
-    dx = (xmax - xmin) / (n-1)
+    dx = (xmax - xmin) / (n - 1)
     x = LinRange(xmin, xmax, n)
-    d = cumsum(f.(x)) * dx 
+    d = cumsum(f.(x)) * dx
     xp = Float64[]
-    for k=1:n
-       r = xmin + rand() * (xmax - xmin)
-       j = findmin(abs.(d .- r) )[2]
-       push!(xp,  x[j])
+    for k = 1:n
+        r = xmin + rand() * (xmax - xmin)
+        j = findmin(abs.(d .- r))[2]
+        push!(xp, x[j])
     end
     xp
 end
 
 g(x) = x
-xp = rpoint(10000, g )
-histogram(xp, bins=64, normalize=true)
+xp = rpoint(10000, g)
+histogram(xp, bins = 64, normalize = true)
 # -
 
 R"X <- rpoint(100)"
@@ -64,7 +64,7 @@ X <- rpoint(10000, function(x,y) { x})
 
 X = @rget X
 
-histogram(X[:x], bins=64, normalize=true)
+histogram(X[:x], bins = 64, normalize = true)
 # +
 R"""
  # `fmax' may be omitted
@@ -72,7 +72,7 @@ R"""
 """
 X = @rget X
 
-histogram2d(X[:x], X[:y], bins=64)
+histogram2d(X[:x], X[:y], bins = 64)
 # -
 
 R"""
@@ -81,7 +81,7 @@ R"""
 """
 X = @rget X
 
-histogram2d(X[:x], X[:y], bins=64)
+histogram2d(X[:x], X[:y], bins = 64)
 
 R"""
  # make a pixel image 
@@ -90,8 +90,6 @@ R"""
  X <- rpoint(10000, Z)
 """
 X = @rget X
-histogram2d(X[:x], X[:y], bins=64)
+histogram2d(X[:x], X[:y], bins = 64)
 
 @rget Z
-
-

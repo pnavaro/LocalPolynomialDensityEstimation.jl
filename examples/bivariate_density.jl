@@ -38,10 +38,7 @@ data = @rget X
 
 scatter(data[:x], data[:y])
 
-w1 = ObservationWindow((0,1), (0,1))
-p1 = PlanarPointPattern( data[:x], data[:y], w1)
+w1 = ObservationWindow((0, 1), (0, 1))
+p1 = PlanarPointPattern(data[:x], data[:y], w1)
 
 contourf(bivariate_density(p1, 0.1))
-
-
-
