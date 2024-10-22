@@ -2,11 +2,12 @@ module LocalPolynomialDensityEstimation
 
 using DocStringExtensions
 using NearestNeighbors
-import KernelDensity
 using Random
 using RecipesBase
 import Statistics: mean
 using TypedPolynomials
+
+import KernelDensity
 
 include("planar_point.jl")
 include("observation_window.jl")
@@ -18,5 +19,7 @@ include("density_estimation.jl")
 include("shape.jl")
 include("bivariate_density.jl")
 include("polynomial_sector.jl")
+
+
 
 end

@@ -63,6 +63,7 @@ struct PixelImage
 
         nrow, ncol = size(mat)
 
+
         dx = (xrange[2] - xrange[1]) / ncol
         dy = (yrange[2] - yrange[1]) / nrow
 
@@ -75,6 +76,29 @@ struct PixelImage
         new(f, mat, xcol, yrow, dx, dy)
 
     end
+
+    function PixelImage( w::ObservationWindow )
+
+        nrow, ncol = IMG_SIZE, IMG_SIZE
+
+        xrange = extrema(p.x for p in w.boundary)
+        yrange = extrema(p.y for p in w.boundary)
+
+        mat = zeros(nrow,ncol)
+
+        dx = (xrange[2] - xrange[1]) / ncol
+        dy = (yrange[2] - yrange[1]) / nrow
+
+        xcol = [(i - 0.5) * dx for i = 1:ncol]
+        yrow = [(j - 0.5) * dy for j = 1:nrow]
+
+        @polyvar x y
+        f = 0 * x + 0 * y
+
+        new(f, mat, xcol, yrow, dx, dy)
+
+    end
+
 
 end
 

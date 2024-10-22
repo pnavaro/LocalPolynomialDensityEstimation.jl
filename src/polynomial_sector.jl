@@ -67,38 +67,3 @@ function f_norm(x, y, k)
 
 end
 
-export f_poly
-
-function f_poly(x, y, k)
-
-    w = polynomial_sector(k)
-
-    a = 0.6
-    b = 0.2
-
-    xrange = extrema(p.x for p in w.boundary)
-    yrange = extrema(p.y for p in w.boundary)
-
-    dx = (xrange[2] - xrange[1]) / IMG_SIZE
-    dy = (yrange[2] - yrange[1]) / IMG_SIZE
-
-    vx = LinRange(xrange[1], xrange[2], IMG_SIZE + 1)[1:end-1] .+ 0.5dx
-    vy = LinRange(yrange[1], yrange[2], IMG_SIZE + 1)[1:end-1] .+ 0.5dy
-
-    A = 0.0
-
-    for px in vx, py in vy
-
-        if inside(PlanarPoint(px, py), w)
-
-            A += abs(px - a)^2 + abs(py - b)^2
-
-        end
-
-    end
-
-    g = abs(x - a)^2 + abs(y - b)^2
-
-    return g / (A * dx * dy)
-
-end

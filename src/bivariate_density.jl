@@ -30,7 +30,9 @@ function bivariate_density(ppp::PlanarPointPattern, h0::Real)
     xdata = [p.x for p in ppp.points]
     ydata = [p.y for p in ppp.points]
 
-    KernelDensity.kde((xdata, ydata); bandwidth = (h0, h0))
+    z = PixelImage(ppp.window)
+
+    KernelDensity.kde((xdata, ydata); bandwidth = (h0, h0), npoints = (IMG_SIZE, IMG_SIZE))
 
 
 end
