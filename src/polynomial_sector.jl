@@ -66,4 +66,3 @@ function f_norm(x, y, k)
     return g / (A * dx * dy)
 
 end
-

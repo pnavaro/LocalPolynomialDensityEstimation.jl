@@ -15,50 +15,11 @@
 #     name: julia-1.11
 # ---
 
-# +
 using LocalPolynomialDensityEstimation
 using Plots
 using RCall
 using Test
-using TypedPolynomials
 
-@polyvar x y
-# -
-
-# Integral on square
-
-R"""
-f <- function(x,y){3*x^2 + 2*y}
-Z <- spatstat.geom::as.im(f, spatstat.geom::square(1))
-"""
-f = 3 * x^2 + 2 * y
-z = PixelImage(f, ObservationWindow((0, 1), (0, 1)))
-@test rcopy(R"spatstat.geom::integral.im(Z)") ≈ integral(z)
-
-# Integral on left triangle
-
-R"""
-w <- spatstat.geom::owin(poly=list(x=c(0.0,1.0,0.0),y=c(0.0,0.0,1.0)))
-z <- spatstat.geom::as.im(f, w)
-"""
-w = ObservationWindow((0, 1, 0), (0, 0, 1))
-z = PixelImage(f, w)
-@test rcopy(R"spatstat.geom::integral.im(z)") ≈ integral(z)
-
-# Integral on right triangle
-
-R"""
-w <- spatstat.geom::owin(poly=list(x=c(0.0,1.0,1.0),y=c(0.0,0.0,1.0)))
-z <- spatstat.geom::as.im(f, w)
-"""
-w = ObservationWindow((0, 1, 1), (0, 0, 1))
-z = PixelImage(f, w)
-@test rcopy(R"spatstat.geom::integral.im(z)") ≈ integral(z)
-
-
-
-k = 2
-@rput k
 R"""
 polynomial_sector <- function(k, npoly = 128) {
   x1 <- c(1, 1)
@@ -72,51 +33,73 @@ polynomial_sector <- function(k, npoly = 128) {
   y <- c(y1, y2, y3)
   spatstat.geom::owin(poly =  list(x = x, y = y))
 }
-w <- polynomial_sector(k)
-spatstat.geom::integral.im(spatstat.geom::as.im(f, w), domain = w)
-"""
-
-w = polynomial_sector(k)
-z = PixelImage(f, w)
-integral(z)
-
-@test integral(z) ≈
-      rcopy(R"spatstat.geom::integral.im(spatstat.geom::as.im(f, w), domain = w)")
-
-R"""
 f_poly <-  function(x, y, k) {
   domain <- polynomial_sector(k)
   a <- 0.6
   b <- 0.2
-  g <- function(u, v) {
-    abs(u - a) ** 2 + abs(v - b) ** 2
-  }
+  g <- function(u, v) {abs(u - a) ** 2 + abs(v - b) ** 2}
   A <- spatstat.geom::integral.im(spatstat.geom::as.im(g, domain), domain = domain)
   g(x, y) / A
 }
-k <- 1
+k <- 2
+domain <- polynomial_sector(k)
 f <- function(x, y) {f_poly(x, y, k)}
+c(f(0, 0), f(1,0), f(1,1), f(1,0))
+"""
 
-f_jl(x, y) = f_poly(x, y, k) 
+# +
+k = 2
+w = polynomial_sector(k)
+function f(x, y) 
+    g(u, v) = begin
+        a, b = 0.6, 0.2
+        (u - a)^2 + (v - b)^2
+    end
+    z = PixelImage(g, w)
+    g( 0, 0) / integral(z)
+end
 
-f_jl(0, 0)
+f(0, 0), f(1,0), f(1,1), f(1,0)
+# -
 
-                  
-        # Strangely (0,0) does not belong to domain for spatstat ! Bug?
+R"""
+eps <- 0.001
+zero <- spatstat.geom::ppp(eps, eps ^ k / 2, domain)
+"""
 
-        eps <- 0.001
-        zero <- spatstat.geom::ppp(eps, eps ^ k / 2, domain)
-        data <- spatstat.random::rpoint(n, f, win = domain)
+R"""
+n <- 200
+data <- spatstat.random::rpoint(n, f, win = domain)
+"""
+@rget data
+scatter(data[:x], data[:y], aspect_ratio=1)
 
-        for (h in HH) {
+# +
+n = 200
+ppp = PlanarPointPattern(n, f, w)
 
-            ## Risk of sparr method
-            f_sparr <- sparr::bivariate.density(data, h)$z
-            f_sparr <- as.vector(f_sparr[idx[1], idx[2]])
-            value = (f_sparr - f00) ** 2
-            cat(value)
-            
-            for (m in MM) {
+plot(ppp, aspect_ratio = 1)
+# -
+
+R"""
+h <- 0.1
+f_sparr <- sparr::bivariate.density(data, h)$z
+"""
+@rget f_sparr
+contourf(f_sparr[:xcol], f_sparr[:yrow], f_sparr[:v], aspect_ratio=1)
+
+f_sparr[:v]
+
+df = bivariate_density(ppp, 0.1)
+
+nx = length(df.x)
+
+df2 = Matrix{Union{Missing, Float64}}(similar(df.density))
+df2[df.density .≈ 0] .= missing
+
+contourf(df.x, df.y, df2')
+
+m = 
 
                 mylp <- density_estimation(
                               data,

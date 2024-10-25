@@ -1,12 +1,10 @@
-using TypedPolynomials
-
 projection(u, v, w) = integral(u * v, w) / integral(v * v, w) * v
 
 function usual_polynomials(deg, w)
-    out = Image[]
+    out = PixelImage[]
     for d = 0:deg, i = 0:d
         j = d - i
-        push!(out, Image((x, y) -> x^i * y^j, w))
+        push!(out, PixelImage((x, y) -> x^i * y^j, w))
     end
     out
 end
@@ -27,26 +25,13 @@ function orthonormal_polynomials(deg, w)
 
     end
 
-    [Image(u -> u / sqrt(integral(u * u, w))) for u in out]
+    [PixelImage(u -> u / sqrt(integral(u * u, w))) for u in out]
 
 end
 
+function integral(f::Function, w::ObservationWindow)
 
-function usual_polynomials(deg::Int)
-    @polyvar x y
-    out = Monomial[]
-    for d = 0:deg, i = 0:d
-        j = d - i
-        push!(out, x^i * y^j)
-    end
-    out
-end
-
-function integral(m::Monomial, w::ObservationWindow)
-
-    s = sum(
-        m(x => px, y => py) for px in w.x, py in w.y if inside(Point(px, py), w.boundary)
-    )
+    s = sum(f(px,py) for px in w.x, py in w.y if inside(PlanarPoint(px, py), w.boundary))
 
     return s * z.dx * z.dy
 

@@ -1,5 +1,3 @@
-using TypedPolynomials
-
 function orientation(p::Vector{PlanarPoint})
     n = length(p)
     sum(signarea(p[1], p[i], p[i+1]) for i = 2:(n-1))

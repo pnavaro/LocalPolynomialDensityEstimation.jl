@@ -5,7 +5,6 @@ using NearestNeighbors
 using Random
 using RecipesBase
 import Statistics: mean
-using TypedPolynomials
 
 import KernelDensity
 

@@ -11,29 +11,13 @@ $(TYPEDEF)
 """
 struct PixelImage
 
-    f::AbstractPolynomialLike
     mat::Matrix{Float64}
     xcol::Vector{Float64}
     yrow::Vector{Float64}
     dx::Float64
     dy::Float64
 
-    function PixelImage(f::AbstractPolynomialLike, xrange, yrange)
-
-        dx = (xrange[2] - xrange[1]) / IMG_SIZE
-        dy = (yrange[2] - yrange[1]) / IMG_SIZE
-
-        xcol = [(i - 0.5) * dx for i = 1:IMG_SIZE]
-        yrow = [(j - 0.5) * dy for j = 1:IMG_SIZE]
-
-        @polyvar x y
-        mat = [f(x => px, y => py) for px in xcol, py in yrow]
-
-        new(f, mat, xcol, yrow, dx, dy)
-
-    end
-
-    function PixelImage(f::AbstractPolynomialLike, w::ObservationWindow)
+    function PixelImage(g::Function, w::ObservationWindow)
 
         xrange = extrema(p.x for p in w.boundary)
         yrange = extrema(p.y for p in w.boundary)
@@ -44,18 +28,9 @@ struct PixelImage
         xcol = [(i - 0.5) * dx for i = 1:IMG_SIZE]
         yrow = [(j - 0.5) * dy for j = 1:IMG_SIZE]
 
-        @polyvar x y
+        mat = [g(x, y) for px in xcol, py in yrow]
 
-        mat = zeros(IMG_SIZE, IMG_SIZE)
-        for j in eachindex(xcol), i in eachindex(yrow)
-            px = xcol[j]
-            py = yrow[i]
-            if inside(px, py, w.boundary)
-                mat[i, j] = f(x => px, y => py)
-            end
-        end
-
-        new(f, mat, xcol, yrow, dx, dy)
+        new(mat, xcol, yrow, dx, dy)
 
     end
 
@@ -69,9 +44,6 @@ struct PixelImage
 
         xcol = [(i - 0.5) * dx for i = 1:ncol]
         yrow = [(j - 0.5) * dy for j = 1:nrow]
-
-        @polyvar x y
-        f = 0 * x + 0 * y
 
         new(f, mat, xcol, yrow, dx, dy)
 
@@ -92,10 +64,7 @@ struct PixelImage
         xcol = [(i - 0.5) * dx for i = 1:ncol]
         yrow = [(j - 0.5) * dy for j = 1:nrow]
 
-        @polyvar x y
-        f = 0 * x + 0 * y
-
-        new(f, mat, xcol, yrow, dx, dy)
+        new(mat, xcol, yrow, dx, dy)
 
     end
 
@@ -106,11 +75,11 @@ export integral
 
 integral(z::PixelImage) = sum(z.mat) * z.dx * z.dy
 
-Base.:(*)(u::PixelImage, v::PixelImage) = PixelImage(u.f * v.f, u.w)
+Base.:(*)(u::PixelImage, v::PixelImage) = PixelImage(u.mat .* v.mat, u.w)
 
-Base.:(-)(u::PixelImage, v::PixelImage) = PixelImage(u.f - v.f, u.w)
+Base.:(-)(u::PixelImage, v::PixelImage) = PixelImage(u.mat .- v.mat, u.w)
 
-Base.:(*)(u::PixelImage, v::Float64) = PixelImage(u.f * v, u.w)
+Base.:(*)(u::PixelImage, v::Float64) = PixelImage(u.mat .* v, u.w)
 
 
 function integral(z::PixelImage, w::ObservationWindow)

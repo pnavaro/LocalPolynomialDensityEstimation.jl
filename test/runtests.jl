@@ -1,7 +1,6 @@
 using LocalPolynomialDensityEstimation
 using Test
 using Aqua
-using TypedPolynomials
 import LocalPolynomialDensityEstimation: orientation
 using RCall
 
@@ -12,8 +11,7 @@ using RCall
     z <- spatstat.geom::as.im(f, spatstat.geom::square(1))
     """
 
-    @polyvar x y
-    f = 3 * x^2 + 2 * y
+    f(x,y) = 3 * x^2 + 2 * y
     z = PixelImage(f, ObservationWindow((0, 1), (0, 1)))
 
     @test rcopy(R"spatstat.geom::integral.im(z)") ≈ integral(z)
