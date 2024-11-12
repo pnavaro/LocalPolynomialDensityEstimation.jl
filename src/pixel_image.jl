@@ -34,7 +34,7 @@ struct PixelImage
 
     end
 
-    function PixelImage(mat, xrange, yrange)
+    function PixelImage(mat, xrange :: Tuple, yrange :: Tuple)
 
         nrow, ncol = size(mat)
 
@@ -45,7 +45,7 @@ struct PixelImage
         xcol = [(i - 0.5) * dx for i = 1:ncol]
         yrow = [(j - 0.5) * dy for j = 1:nrow]
 
-        new(f, mat, xcol, yrow, dx, dy)
+        new(mat, xcol, yrow, dx, dy)
 
     end
 
