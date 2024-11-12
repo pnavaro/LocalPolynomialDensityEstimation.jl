@@ -28,7 +28,7 @@ struct PixelImage
         xcol = [(i - 0.5) * dx for i = 1:IMG_SIZE]
         yrow = [(j - 0.5) * dy for j = 1:IMG_SIZE]
 
-        mat = [g(x, y) for px in xcol, py in yrow]
+        mat = [g(x, y) for x in xcol, y in yrow]
 
         new(mat, xcol, yrow, dx, dy)
 
