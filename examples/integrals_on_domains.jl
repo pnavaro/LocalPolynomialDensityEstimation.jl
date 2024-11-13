@@ -10,20 +10,16 @@
 #       format_version: '1.5'
 #       jupytext_version: 1.16.4
 #   kernelspec:
-#     display_name: Julia 1.11.0
+#     display_name: Julia 1.11.1
 #     language: julia
 #     name: julia-1.11
 # ---
 
-# +
 using LocalPolynomialDensityEstimation
 using Plots
 using RCall
 using Test
-using TypedPolynomials
 
-@polyvar x y
-# -
 
 # Integral on square
 
@@ -31,7 +27,7 @@ R"""
 f <- function(x,y){3*x^2 + 2*y}
 Z <- spatstat.geom::as.im(f, spatstat.geom::square(1))
 """
-f = 3*x^2 + 2*y
+f(x,y) =  3*x^2 + 2*y
 z = PixelImage(f, ObservationWindow((0,1), (0,1)))
 @test rcopy(R"spatstat.geom::integral.im(Z)") ≈ integral(z)
 

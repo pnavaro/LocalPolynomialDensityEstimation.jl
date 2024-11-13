@@ -17,7 +17,7 @@ struct PixelImage
     dx::Float64
     dy::Float64
 
-    function PixelImage(g::Function, w::ObservationWindow)
+    function PixelImage(f::Function, w::ObservationWindow)
 
         xrange = extrema(p.x for p in w.boundary)
         yrange = extrema(p.y for p in w.boundary)
@@ -28,7 +28,14 @@ struct PixelImage
         xcol = [(i - 0.5) * dx for i = 1:IMG_SIZE]
         yrow = [(j - 0.5) * dy for j = 1:IMG_SIZE]
 
-        mat = [g(x, y) for x in xcol, y in yrow]
+        mat = zeros(IMG_SIZE, IMG_SIZE)
+        for j in eachindex(xcol), i in eachindex(yrow)
+            px = xcol[j]
+            py = yrow[i]
+            if inside(px, py, w.boundary)
+                mat[i, j] = f(px, py)
+            end
+        end
 
         new(mat, xcol, yrow, dx, dy)
 
