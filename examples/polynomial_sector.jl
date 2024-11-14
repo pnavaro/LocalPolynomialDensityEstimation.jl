@@ -14,7 +14,6 @@
 # ---
 
 using LocalPolynomialDensityEstimation
-using TypedPolynomials
 using KernelDensity
 using Plots
 

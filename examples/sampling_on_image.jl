@@ -21,19 +21,21 @@ using RCall
 R"library(spatstat.geom)"
 R"library(spatstat.random)"
 # +
-R"X <- rpoint(100, function(x,y) { x^2 + y^2}, 1)"
+R"X <- rpoint(1000, function(x,y) { x^2 + y^2}, 1)"
 
 X = @rget X
-scatter(X[:x], X[:y])
+scatter(X[:x], X[:y], aspect_ratio=1)
 
 # +
 
 
 f = (x, y) -> x^2 + y^2
-n = 100
+n = 1000
 # -
 
 w = ObservationWindow((0.1, 0.9), (0.2, 0.8))
 ppp = PlanarPointPattern(n, f, w)
 
-plot(ppp, xlims = (0, 1), ylims = (0, 1))
+plot(ppp, xlims = (0, 1), ylims = (0, 1), aspect_ratio=1)
+
+

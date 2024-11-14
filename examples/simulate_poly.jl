@@ -31,6 +31,9 @@ polynomial_sector <- function(k, npoly = 128) {
 
   x <- c(x1, x2, x3)
   y <- c(y1, y2, y3)
+  cat(x)
+  print("\n")
+  cat(y)
   spatstat.geom::owin(poly =  list(x = x, y = y))
 }
 f_poly <-  function(x, y, k) {
@@ -56,7 +59,7 @@ function f(x, y)
         (u - a)^2 + (v - b)^2
     end
     z = PixelImage(g, w)
-    g( 0, 0) / integral(z)
+    g( x, y) / integral(z)
 end
 
 f(0, 0), f(1,0), f(1,1), f(1,0)
