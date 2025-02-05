@@ -12,7 +12,7 @@ for(pkg in deps) {
     }
 }
 
-devtools::install_github("klutchnikoff/densityLocPoly")
-library(densityLocPoly)
-
-orthonormal_polynomials <- utils::getFromNamespace("orthonormal_polynomials", "densityLocPoly")
+# devtools::install_github("klutchnikoff/densityLocPoly")
+# library(densityLocPoly)
+# 
+# orthonormal_polynomials <- utils::getFromNamespace("orthonormal_polynomials", "densityLocPoly")
