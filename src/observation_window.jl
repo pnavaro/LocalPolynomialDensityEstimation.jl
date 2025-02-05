@@ -169,3 +169,11 @@ function Base.intersect(w1::ObservationWindow, w2::ObservationWindow)
     return ObservationWindow(sutherland_hodgman(poly_points, clipper_points))
 
 end
+
+function inside(x::AbstractVector, y::AbstractVector, owin::ObservationWindow)
+
+    @assert length(x) == length(y)
+
+    [inside(px, py, owin.boundary) for (px, py) in zip(x, y)]
+
+end

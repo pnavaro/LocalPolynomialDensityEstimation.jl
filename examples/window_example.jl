@@ -15,18 +15,14 @@
 
 using LocalPolynomialDensityEstimation
 using Plots
-using TypedPolynomials
-
 
 w = ObservationWindow((0.5, 1, 0.5, 0), (0, 1, 2, 1))
 
 plot(w)
 
-@polyvar x y
+f(x,y) = 3x^2 + 2y
 
-f = 3x^2 + 2y
-
-z = PixelImage(f, (0, 1), (0, 1))
+z = PixelImage(f, w)
 
 @show integral(z)
 

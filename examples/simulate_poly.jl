@@ -91,28 +91,28 @@ f_sparr <- sparr::bivariate.density(data, h)$z
 @rget f_sparr
 contourf(f_sparr[:xcol], f_sparr[:yrow], f_sparr[:v], aspect_ratio=1)
 
-f_sparr[:v]
-
-df = bivariate_density(ppp, 0.1)
-
-nx = length(df.x)
-
-df2 = Matrix{Union{Missing, Float64}}(similar(df.density))
-df2[df.density .≈ 0] .= missing
-
-contourf(df.x, df.y, df2')
-
-m = 
-
-                mylp <- density_estimation(
-                              data,
-                              domain,
-                              at_points = zero,
-                              bandwidth = h,
-                              degree = m
-                            )
-            }
-        }
-    }
-}
-"""
+# f_sparr[:v]
+# 
+# df = bivariate_density(ppp, 0.1)
+# 
+# nx = length(df.x)
+# 
+# df2 = Matrix{Union{Missing, Float64}}(similar(df.density))
+# df2[df.density .≈ 0] .= missing
+# 
+# contourf(df.x, df.y, df2')
+# 
+# m = 
+# 
+#                 mylp <- density_estimation(
+#                               data,
+#                               domain,
+#                               at_points = zero,
+#                               bandwidth = h,
+#                               degree = m
+#                             )
+#             }
+#         }
+#     }
+# }
+# """
