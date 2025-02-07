@@ -16,25 +16,14 @@ pixel value at the location (xcol[j],yrow[i]).
 PixelImage
 ```
 
+
 ```@example image
 using LocalPolynomialDensityEstimation
 using Plots
-using TypedPolynomials
 using Random
 
-@polyvar x y
-
-f = 3x^2 + 2y
-
-z = PixelImage(f, (0,1), (0,1))
-
-integral(z)
-```
-
-
-```@example image
 mat = rand(30, 40)
-img = PixelImage(mat, (0,1), (0,1))
+img = PixelImage(mat, (0, 1), (0, 1))
 
 contourf(img)
 ```
@@ -47,8 +36,7 @@ plot(s)
 
 ```@example image
 mat = zeros(40, 60)
-z = PixelImage(mat, (0,1), (0,1))
+z = PixelImage(mat, (0, 1), (0, 1))
 
 plot(PlanarPointPattern(z, s))
 ```
-
