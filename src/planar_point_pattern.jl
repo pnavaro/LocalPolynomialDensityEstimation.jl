@@ -66,7 +66,7 @@ struct PlanarPointPattern
                 u = rand(length(prop))
                 Y = prop[u.<paccept]
                 if length(Y) > 0
-                    X = vcat(X, [p for p in Y if inside(p, w)])
+                    push!(X, [p for p in Y if inside(p, w)])
                     nX = length(X)
                     pbar = nX / totngen
                     nremaining = n - nX
@@ -103,7 +103,6 @@ end
         y := [p.y for p in ppp.points]
         seriestype := :scatter
         legend := false
-        markerstrokewidth := 0
         ()
     end
 
