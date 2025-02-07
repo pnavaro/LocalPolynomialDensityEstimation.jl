@@ -1,3 +1,8 @@
 [deps]
+Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+Images = "916415d5-f1e6-5110-898d-aaa5f9f070e0"
 LocalPolynomialDensityEstimation = "83fb4684-3fee-4d04-98f8-7882db2935bc"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+RCall = "6f49c342-dc21-5d91-9882-a32aef131414"
+TypedPolynomials = "afbbf031-7a57-5f58-a1b9-b774a0fad08d"
