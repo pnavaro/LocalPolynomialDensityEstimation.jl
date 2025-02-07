@@ -1,6 +1,8 @@
 using LocalPolynomialDensityEstimation
 using Documenter
 
+ENV["GKSwstype"] = "100"
+
 DocMeta.setdocmeta!(
     LocalPolynomialDensityEstimation,
     :DocTestSetup,
