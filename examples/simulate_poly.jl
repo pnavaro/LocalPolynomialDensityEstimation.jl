@@ -10,7 +10,7 @@
 #       format_version: '1.5'
 #       jupytext_version: 1.16.4
 #   kernelspec:
-#     display_name: Julia 1.11.0
+#     display_name: Julia 1.11.1
 #     language: julia
 #     name: julia-1.11
 # ---
@@ -31,9 +31,6 @@ polynomial_sector <- function(k, npoly = 128) {
 
   x <- c(x1, x2, x3)
   y <- c(y1, y2, y3)
-  cat(x)
-  print("\n")
-  cat(y)
   spatstat.geom::owin(poly =  list(x = x, y = y))
 }
 f_poly <-  function(x, y, k) {
@@ -51,9 +48,21 @@ c(f(0, 0), f(1,0), f(1,1), f(1,0))
 """
 
 # +
+@time begin
+R"""
+n <- 1000
+data <- spatstat.random::rpoint(n, f, win = domain)
+"""
+end
+
+@rget data
+scatter(data[:x], data[:y], aspect_ratio=1)
+
+# +
 k = 2
-w = polynomial_sector(k)
-function f(x, y) 
+domain = polynomial_sector(k)
+function f(x, y, k) 
+    w = polynomial_sector(k)
     g(u, v) = begin
         a, b = 0.6, 0.2
         (u - a)^2 + (v - b)^2
@@ -63,26 +72,42 @@ function f(x, y)
 end
 
 f(0, 0), f(1,0), f(1,1), f(1,0)
-# -
-
-R"""
-eps <- 0.001
-zero <- spatstat.geom::ppp(eps, eps ^ k / 2, domain)
-"""
-
-R"""
-n <- 200
-data <- spatstat.random::rpoint(n, f, win = domain)
-"""
-@rget data
-scatter(data[:x], data[:y], aspect_ratio=1)
 
 # +
-n = 200
-ppp = PlanarPointPattern(n, f, w)
+n = 100
+
+function rpoint(n::Int,f::Function, w::ObservationWindow )
+        pbar = 1
+        nremaining = n
+        totngen = 0
+        ntries = 0
+        isim = 1
+        X = PlanarPoint[]
+        while true
+            ntries += 1
+            @show ngen :: Int = nremaining ÷ pbar + 10
+            totngen += ngen
+            if ngen > 0
+                for i in 1:ngen
+                    prop_x, prop_y = rand(2)
+                    if rand() < f(prop_x, prop_y)
+                        p = PlanarPoint(prop_x, prop_y)
+                        inside(p, w) && push!(X, p)
+                    end
+                    nX = length(X)
+                    pbar = nX / totngen
+                    @show nremaining = n - nX
+                    if nremaining <= 0
+                        return PlanarPointPattern(X[1:n])
+                    end
+                end
+            end
+        end
+    end
+@time ppp = rpoint(n, (x,y) -> f(x, y, k), w)
+# -
 
 plot(ppp, aspect_ratio = 1)
-# -
 
 R"""
 h <- 0.1
