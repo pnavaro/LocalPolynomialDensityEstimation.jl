@@ -1,3 +1,3 @@
 var documenterSearchIndex = {"docs":
-[{"location":"#LocalPolynomialDensityEstimation","page":"Home","title":"LocalPolynomialDensityEstimation","text":"Documentation for LocalPolynomialDensityEstimation.\n\n","category":"section"}]
+[{"category":"section","location":"#LocalPolynomialDensityEstimation","page":"Home","text":"Documentation for LocalPolynomialDensityEstimation.\n\n","title":"LocalPolynomialDensityEstimation"}]
 }
